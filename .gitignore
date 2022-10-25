@@ -80,7 +80,7 @@ AssetBundles/
 ImportedBundles/
 
 # MeatKit stuffs
-/[Aa]ssets/Managed/*
+!/[Aa]ssets/Managed/*
 !/[Aa]ssets/Managed/0Harmony.*
 !/[Aa]ssets/Managed/BepInEx.*
 !/[Aa]ssets/Managed/DotNetZip.*
