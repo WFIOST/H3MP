@@ -44,7 +44,7 @@ public class NetworkingPanelButton : MonoBehaviour {
 
 			textbox.text = externalIp.ToString();
 			NetworkingPanel.NP.CreateServer();
-		}
+        }
     }
 	public enum buttonTypes
     {

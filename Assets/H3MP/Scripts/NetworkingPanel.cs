@@ -79,6 +79,8 @@ public class NetworkingPanel : BaseUnityPlugin {
     {
 		Plugin.Instance.StartServer();
 		
+		panel.transform.GetChild(0).gameObject.SetActive(false);// Disable Connect UI
+		panel.transform.GetChild(1).gameObject.SetActive(true); // Enable Player list UI
     }
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
 	public void positionMover(NetVector3 pos)
