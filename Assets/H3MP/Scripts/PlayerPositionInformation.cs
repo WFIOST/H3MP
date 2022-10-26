@@ -5,7 +5,7 @@ using System.Net;
 using System;
 using Riptide;
 using FistVR;
-using H3MP;
+using H3MP.Core;
 public class PlayerPositionInformation : MonoBehaviour
 {
 
@@ -31,7 +31,7 @@ public class PlayerPositionInformation : MonoBehaviour
 		Message message = Message.Create(MessageSendMode.Unreliable, messageType.PlayerPosition);
 		NetVector3 pos = new NetVector3(GM.CurrentPlayerBody.transform.position);
 		pos.Serialize(message);
-		H3MP.H3MP.Instance.Send(message);
+		Plugin.Instance.Client.Send(message);
 	}
     [MessageHandler(((ushort)messageType.PlayerPosition))]
 	private static void ReceivePlayerPositionMessage(Message message)

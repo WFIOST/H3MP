@@ -8,7 +8,8 @@ using Sodalite.ModPanel;
 using System.IO;
 using System.Reflection;
 using FistVR;
-using H3MP;
+using H3MP.Core;
+//using H3MP.Common;
 using BepInEx;
 [BepInPlugin("h3vr.arpy.H3MP", "NetworkingPanel", "1.0.0")]
 public class NetworkingPanel : BaseUnityPlugin {
@@ -51,7 +52,8 @@ public class NetworkingPanel : BaseUnityPlugin {
 	}
 	public void Connect()
 	{
-		H3MP.H3MP.Instance.ConnectTo(IPaddress);
+		Plugin.Instance.ConnectTo(IPaddress);
+		
 	}
 	public string ScreenName;
 	private void SpawnModPanel() //This spawns the disclaimer panel in your left hand
@@ -75,7 +77,7 @@ public class NetworkingPanel : BaseUnityPlugin {
 	}
 	public void CreateServer()
     {
-		H3MP.H3MP.Instance.StartServer();
+		Plugin.Instance.StartServer();
 		
     }
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
