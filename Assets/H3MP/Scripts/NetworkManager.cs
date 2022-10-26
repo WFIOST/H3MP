@@ -12,7 +12,7 @@ public class NetworkManager : NetworkedBehaviour {
     public GameObject PlayerPrefab;
     public List<string> PlayerList;
     public static NetworkManager instance;
-    private PlayerStruct playerUpdateStruct;
+    private Player playerUpdateStruct;
     // Use this for initialization
     void Start() {
 
@@ -68,7 +68,7 @@ public class NetworkManager : NetworkedBehaviour {
     private static void HandlePlayerMovementMessage(Message message)
     {
 
-        PlayerStruct NewMovePacket = new PlayerStruct();
+        Player NewMovePacket = new Player();
        NewMovePacket.Deserialize(message);
         for (int i = 0; i < instance.scenePlayers.Count; i++)
         {
@@ -81,64 +81,11 @@ public class NetworkManager : NetworkedBehaviour {
     private void PlayerMoveMessageSender()
     {
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.MOVED);
-        playerUpdateStruct = new PlayerStruct(ushort.MaxValue, GM.CurrentPlayerBody.Head.position, GM.CurrentPlayerBody.Head.rotation, GM.CurrentMovementManager.Hands[0].transform.position, GM.CurrentMovementManager.Hands[0].transform.rotation, GM.CurrentMovementManager.Hands[1].transform.position, GM.CurrentMovementManager.Hands[1].transform.rotation) ;
+        playerUpdateStruct = new Player(ushort.MaxValue, string.Empty, GM.CurrentPlayerBody.Head.position, GM.CurrentPlayerBody.Head.rotation, GM.CurrentMovementManager.Hands[0].transform.position, GM.CurrentMovementManager.Hands[0].transform.rotation, GM.CurrentMovementManager.Hands[1].transform.position, GM.CurrentMovementManager.Hands[1].transform.rotation) ;
         //playerUpdateStruct.Serialize(msg);
         msg.Add(playerUpdateStruct);
         Plugin.Instance.Client.Send(msg);
 
     }
-    /*public struct PlayerStruct : IEquatable<PlayerStruct>, IMessageSerializable
-    {
-        public Player Player;
-        public ushort ID;
-       
-        public PlayerStruct(ushort mID, Vector3 HP, Quaternion HR, Vector3 LHP, Quaternion LHR, Vector3 RHP, Quaternion RHR)
-        {
-            ID = mID;
-            Player p = new Player
-            {
-                headPos = HP,
-                headRot = HR,
-                leftHandPos = LHP,
-                leftHandRot = LHR,
-                rightHandPos = RHP,
-                rightHandRot = RHR
-            };
-            Player = p;
-
-        }
-        public bool Equals(PlayerStruct other)
-        {
-            if (ID == other.ID)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        
-        public void Serialize(Message message)
-        {
-            Serialization.Add(message, Player.headPos);
-            Serialization.Add(message, Player.headRot);
-            Serialization.Add(message, Player.leftHandPos);
-            Serialization.Add(message, Player.leftHandRot);
-            Serialization.Add(message, Player.rightHandPos);
-            Serialization.Add(message, Player.rightHandRot);
-        }
-        public void Deserialize(Message message)
-        {
-            ID = message.GetUShort();
-            Player.headPos = message.GetVector3();
-            Player.headRot = message.GetQuaternion();
-            Player.leftHandPos = message.GetVector3();
-            Player.leftHandRot = message.GetQuaternion();
-            Player.rightHandPos = message.GetVector3();
-            Player.rightHandRot = message.GetQuaternion();
-        }
-    }*/
     
-
 }
