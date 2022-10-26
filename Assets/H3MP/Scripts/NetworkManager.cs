@@ -15,6 +15,8 @@ public class NetworkManager : NetworkedBehaviour {
     private Player playerUpdateStruct;
     // Use this for initialization
     void Start() {
+        DontDestroyOnLoad(gameObject);
+        playerUpdateStruct = new Player();
 
     }
 
@@ -33,6 +35,7 @@ public class NetworkManager : NetworkedBehaviour {
         JeffSP.ScoreBoardPosition = scenePlayers.IndexOf(JeffSP);
         JeffSP.ID = id;
         JeffSP.name = username;
+        JeffSP.namePlate.text = username;
 
     }
     public virtual void ScoreBoardUpdate()
@@ -81,8 +84,7 @@ public class NetworkManager : NetworkedBehaviour {
     private void PlayerMoveMessageSender()
     {
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.MOVED);
-        playerUpdateStruct = new Player(ushort.MaxValue, string.Empty, GM.CurrentPlayerBody.Head.position, GM.CurrentPlayerBody.Head.rotation, GM.CurrentMovementManager.Hands[0].transform.position, GM.CurrentMovementManager.Hands[0].transform.rotation, GM.CurrentMovementManager.Hands[1].transform.position, GM.CurrentMovementManager.Hands[1].transform.rotation) ;
-        //playerUpdateStruct.Serialize(msg);
+        playerUpdateStruct = new Player(ushort.MaxValue, string.Empty, GM.CurrentPlayerBody.Head.position, GM.CurrentPlayerBody.Head.rotation, GM.CurrentMovementManager.Hands[0].transform.position, GM.CurrentMovementManager.Hands[0].transform.rotation, GM.CurrentMovementManager.Hands[1].transform.position, GM.CurrentMovementManager.Hands[1].transform.rotation) ;       
         msg.Add(playerUpdateStruct);
         Plugin.Instance.Client.Send(msg);
 
