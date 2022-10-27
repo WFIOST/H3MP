@@ -14,7 +14,7 @@ using BepInEx;
 [BepInPlugin("h3vr.arpy.H3MP", "NetworkingPanel", "1.0.0")]
 public class NetworkingPanel : BaseUnityPlugin {
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
-	public GameObject PlayerPositionReference;
+	//public GameObject PlayerPositionReference;
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
 	public static NetworkingPanel NP;
 	public string IPaddress = "00000000";
@@ -22,6 +22,7 @@ public class NetworkingPanel : BaseUnityPlugin {
 	private LockablePanel _modPanel = null;
 	private UniversalModPanel _modPanelComponent;
 	public GameObject panel;
+	public GameObject networkManager;
 	private static readonly string BasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 	public void Awake () {
 		var bundle = AssetBundle.LoadFromFile(Path.Combine(BasePath, "H3MP"));
@@ -31,6 +32,7 @@ public class NetworkingPanel : BaseUnityPlugin {
 			_modPanelPrefab = bundle.LoadAsset<GameObject>("NetworkingPanelUI");
 			_modPanel = new LockablePanel();
 			_modPanel.Configure += ConfigureModPanel;
+			networkManager = bundle.LoadAsset<GameObject>(")NetworkManager");
 			
 		}
 		NP = this;
@@ -38,8 +40,8 @@ public class NetworkingPanel : BaseUnityPlugin {
 	void Start()
     {
 		//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
-		PlayerPositionReference = Instantiate(PlayerPositionReference);
-		PlayerPositionReference.transform.position = GM.CurrentPlayerBody.transform.position;
+		//PlayerPositionReference = Instantiate(PlayerPositionReference);
+		//PlayerPositionReference.transform.position = GM.CurrentPlayerBody.transform.position;
 		//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
 	}
 	// Update is called once per frame
@@ -85,7 +87,7 @@ public class NetworkingPanel : BaseUnityPlugin {
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
 	public void positionMover(NetVector3 pos)
     {
-		PlayerPositionReference.transform.position = new Vector3(pos.x, pos.y, pos.z);
+		//PlayerPositionReference.transform.position = new Vector3(pos.x, pos.y, pos.z);
     }
 	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
 }
