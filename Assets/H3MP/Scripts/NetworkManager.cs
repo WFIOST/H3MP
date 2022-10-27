@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Riptide;
 using H3MP.Core;
-using H3MP.Common;
+
 using FistVR;
 public class NetworkManager : NetworkedBehaviour {
 
@@ -17,7 +17,7 @@ public class NetworkManager : NetworkedBehaviour {
     void Start() {
         DontDestroyOnLoad(gameObject);
         playerUpdateStruct = new Player();
-
+        instance = this;
     }
 
     // Update is called once per frame
@@ -25,8 +25,8 @@ public class NetworkManager : NetworkedBehaviour {
 
     public override void NetworkUpdate(Server server, Client client, bool isServer)
     {
-        PlayerMoveMessageSender();
-        
+        Debug.Log("Network Update Called");
+        PlayerMoveMessageSender();        
     }
     public virtual void AddPlayer(ushort id, string username) {
         GameObject Jeff = Instantiate(PlayerPrefab);
@@ -63,12 +63,13 @@ public class NetworkManager : NetworkedBehaviour {
 
 
     [MessageHandler((ushort)MessageIdentifier.Player.ENTER)]
-    private static void HandleConnectionInformationPacketMessage(Message message)
+    public static void HandleConnectionInformationPacketMessage(Message message)
     {
         instance.AddPlayer(message.GetUShort(), message.GetString());
+        
     }
     [MessageHandler((ushort)MessageIdentifier.Player.MOVED)]
-    private static void HandlePlayerMovementMessage(Message message)
+    public static void HandlePlayerMovementMessage(Message message)
     {
 
         Player NewMovePacket = new Player();
@@ -84,8 +85,15 @@ public class NetworkManager : NetworkedBehaviour {
     private void PlayerMoveMessageSender()
     {
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.MOVED);
-        playerUpdateStruct = new Player(ushort.MaxValue, string.Empty, GM.CurrentPlayerBody.Head.position, GM.CurrentPlayerBody.Head.rotation, GM.CurrentMovementManager.Hands[0].transform.position, GM.CurrentMovementManager.Hands[0].transform.rotation, GM.CurrentMovementManager.Hands[1].transform.position, GM.CurrentMovementManager.Hands[1].transform.rotation) ;       
+        playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
+        playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
+        playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
+        playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
+        playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
+        playerUpdateStruct.RightHand.Rotation =  GM.CurrentMovementManager.Hands[1].transform.rotation;
+        Debug.Log("Packed the position/rotation etc");
         msg.Add(playerUpdateStruct);
+        Debug.Log("Added Moved Packet");
         Plugin.Instance.Client.Send(msg);
 
     }
