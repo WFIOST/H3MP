@@ -32,14 +32,14 @@ public class NetworkingPanel : BaseUnityPlugin
 			_modPanelPrefab = bundle.LoadAsset<GameObject>("NetworkingPanelUI");
 			_modPanel = new LockablePanel();
 			_modPanel.Configure += ConfigureModPanel;
-			networkManager = bundle.LoadAsset<GameObject>(")NetworkManager");
+			networkManager = bundle.LoadAsset<GameObject>("_NetworkManager");
 
 		}
 		NP = this;
 	}
 	void Start()
 	{
-
+		Instantiate(networkManager);
 	}
 	// Update is called once per frame
 	public void Update()
