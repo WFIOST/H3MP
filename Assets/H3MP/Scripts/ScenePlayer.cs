@@ -19,15 +19,14 @@ public class ScenePlayer : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+	
 	}
 	public void UpdatePlayer(Player PS)
     {
-		Head.transform.position = PS.Head.Position;
-		Head.transform.rotation = PS.Head.Rotation;
-		LeftHand.transform.position = PS.LeftHand.Position;
-		LeftHand.transform.rotation = PS.LeftHand.Rotation;
-		RightHand.transform.position = PS.RightHand.Position;
-		RightHand.transform.rotation = PS.RightHand.Rotation;
+		
+		Head.transform.SetPositionAndRotation(PS.Head.Position, PS.Head.Rotation);		
+		LeftHand.transform.SetPositionAndRotation(PS.LeftHand.Position, PS.LeftHand.Rotation);
+		RightHand.transform.SetPositionAndRotation(PS.RightHand.Position, PS.RightHand.Rotation);
+		
 	}
 }

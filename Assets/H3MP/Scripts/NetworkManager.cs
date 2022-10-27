@@ -7,6 +7,7 @@ using H3MP.Core;
 
 using FistVR;
 public class NetworkManager : NetworkedBehaviour {
+    
 
     public List<ScenePlayer> scenePlayers = new List<ScenePlayer>();
     public GameObject PlayerPrefab;
@@ -14,19 +15,31 @@ public class NetworkManager : NetworkedBehaviour {
     public static NetworkManager instance;
     private Player playerUpdateStruct;
     // Use this for initialization
-    void Start() {
+    void Awake() {
+        
         DontDestroyOnLoad(gameObject);
         playerUpdateStruct = new Player();
         instance = this;
     }
 
     // Update is called once per frame
-
+    void Update()
+    {
+       instance.playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
+       instance.playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
+       instance.playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
+       instance.playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
+       instance.playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
+       instance.playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+    }
 
     public override void NetworkUpdate(Server server, Client client, bool isServer)
     {
-        Debug.Log("Network Update Called");
-        PlayerMoveMessageSender();        
+        if (Plugin.Instance.Client.IsConnected)
+        {
+           // Debug.Log("Network Update Called");
+            PlayerMoveMessageSender();
+        }
     }
     public virtual void AddPlayer(ushort id, string username) {
         GameObject Jeff = Instantiate(PlayerPrefab);
@@ -60,8 +73,15 @@ public class NetworkManager : NetworkedBehaviour {
 
     }
 
-
-
+    [MessageHandler((ushort)MessageIdentifier.Networking.PLAYER_LIST)]
+    public static void HandlePlayerListMessages(Message message)
+    {
+        Player[] Players = message.GetSerializables<Player>();
+        foreach (Player player in Players)
+        {
+            instance.AddPlayer(player.ID, player.Username);
+        }
+    }
     [MessageHandler((ushort)MessageIdentifier.Player.ENTER)]
     public static void HandleConnectionInformationPacketMessage(Message message)
     {
@@ -73,6 +93,7 @@ public class NetworkManager : NetworkedBehaviour {
     {
 
         Player NewMovePacket = new Player();
+       
        NewMovePacket.Deserialize(message);
         for (int i = 0; i < instance.scenePlayers.Count; i++)
         {
@@ -85,16 +106,12 @@ public class NetworkManager : NetworkedBehaviour {
     private void PlayerMoveMessageSender()
     {
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.MOVED);
-        playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
-        playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
-        playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
-        playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
-        playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
-        playerUpdateStruct.RightHand.Rotation =  GM.CurrentMovementManager.Hands[1].transform.rotation;
-        Debug.Log("Packed the position/rotation etc");
-        msg.Add(playerUpdateStruct);
-        Debug.Log("Added Moved Packet");
+       
+        //Debug.Log("Packed the position/rotation etc");
+        msg.Add(instance.playerUpdateStruct);
+        //Debug.Log("Added Moved Packet");
         Plugin.Instance.Client.Send(msg);
+        Debug.Log("SendingPacket");
 
     }
     
