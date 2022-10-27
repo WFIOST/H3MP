@@ -323,7 +323,7 @@ MonoBehaviour:
   RightHand: {fileID: 1187776249714314}
   Name: 
   ScoreBoardPosition: 0
-  namePlate: {fileID: 0}
+  namePlate: {fileID: 114481946806626696}
   ID: 0
 --- !u!114 &114481946806626696
 MonoBehaviour:

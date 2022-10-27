@@ -6,7 +6,7 @@ using Riptide;
 using H3MP.Core;
 
 using FistVR;
-public class NetworkManager : NetworkedBehaviour {
+public class NetworkManager : MonoBehaviour {
     
 
     public List<ScenePlayer> scenePlayers = new List<ScenePlayer>();
@@ -20,7 +20,9 @@ public class NetworkManager : NetworkedBehaviour {
         DontDestroyOnLoad(gameObject);
         playerUpdateStruct = new Player();
         instance = this;
+        
     }
+   
 
     // Update is called once per frame
     void Update()
@@ -33,8 +35,9 @@ public class NetworkManager : NetworkedBehaviour {
        instance.playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
     }
 
-    public override void NetworkUpdate(Server server, Client client, bool isServer)
+    public void FixedUpdate(Server server, Client client, bool isServer)
     {
+        
         if (Plugin.Instance.Client.IsConnected)
         {
            // Debug.Log("Network Update Called");
