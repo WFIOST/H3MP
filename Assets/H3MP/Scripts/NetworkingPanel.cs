@@ -12,10 +12,9 @@ using H3MP.Core;
 //using H3MP.Common;
 using BepInEx;
 [BepInPlugin("h3vr.arpy.H3MP", "NetworkingPanel", "1.0.0")]
-public class NetworkingPanel : BaseUnityPlugin {
-	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
-	//public GameObject PlayerPositionReference;
-	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
+public class NetworkingPanel : BaseUnityPlugin
+{
+
 	public static NetworkingPanel NP;
 	public string IPaddress = "00000000";
 	private GameObject _modPanelPrefab;
@@ -24,38 +23,37 @@ public class NetworkingPanel : BaseUnityPlugin {
 	public GameObject panel;
 	public GameObject networkManager;
 	private static readonly string BasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-	public void Awake () {
+	public void Awake()
+	{
 		var bundle = AssetBundle.LoadFromFile(Path.Combine(BasePath, "H3MP"));
 		if (bundle)
 		{
-				
+
 			_modPanelPrefab = bundle.LoadAsset<GameObject>("NetworkingPanelUI");
 			_modPanel = new LockablePanel();
 			_modPanel.Configure += ConfigureModPanel;
 			networkManager = bundle.LoadAsset<GameObject>(")NetworkManager");
-			
+
 		}
 		NP = this;
 	}
 	void Start()
-    {
-		//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
-		//PlayerPositionReference = Instantiate(PlayerPositionReference);
-		//PlayerPositionReference.transform.position = GM.CurrentPlayerBody.transform.position;
-		//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
+	{
+
 	}
 	// Update is called once per frame
-	public void Update () {
+	public void Update()
+	{
 		if (Input.GetKeyDown(KeyCode.Alpha7))
-        {
+		{
 			Debug.Log("KeyDown");
 			createPanel();
-        }
+		}
 	}
 	public void Connect()
 	{
 		Plugin.Instance.ConnectTo(IPaddress);
-		
+
 	}
 	public string ScreenName;
 	private void SpawnModPanel() //This spawns the disclaimer panel in your left hand
@@ -71,23 +69,22 @@ public class NetworkingPanel : BaseUnityPlugin {
 		Destroy(canvasTransform.gameObject);
 	}
 	public void createPanel()
-    {
+	{
 		Debug.Log("CreatePanel");
 		LockablePanel BloodOathPanel = new LockablePanel();
 		BloodOathPanel.Configure += ConfigureModPanel;
 		SpawnModPanel();
 	}
 	public void CreateServer()
-    {
+	{
 		Plugin.Instance.StartServer();
-		
+
 		panel.transform.GetChild(0).gameObject.SetActive(false);// Disable Connect UI
 		panel.transform.GetChild(1).gameObject.SetActive(true); // Enable Player list UI
-    }
-	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
+	}
+
 	public void positionMover(NetVector3 pos)
-    {
-		//PlayerPositionReference.transform.position = new Vector3(pos.x, pos.y, pos.z);
-    }
-	//everything within these comments is temporary and should be moved to a better place once you figure out where that would be
+	{
+	}
 }
+	
