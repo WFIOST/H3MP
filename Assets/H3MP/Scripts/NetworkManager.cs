@@ -47,7 +47,7 @@ public class NetworkManager : NetworkedBehaviour {
         scenePlayers.Add(JeffSP);
         JeffSP.ScoreBoardPosition = scenePlayers.IndexOf(JeffSP);
         JeffSP.ID = id;
-        JeffSP.name = username;
+        JeffSP.Name = username;
         JeffSP.namePlate.text = username;
 
     }
@@ -95,6 +95,7 @@ public class NetworkManager : NetworkedBehaviour {
         Player NewMovePacket = new Player();
        
        NewMovePacket.Deserialize(message);
+        Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
         for (int i = 0; i < instance.scenePlayers.Count; i++)
         {
             if (instance.scenePlayers[i].ID == NewMovePacket.ID)

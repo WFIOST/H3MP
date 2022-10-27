@@ -49,6 +49,11 @@ public class NetworkingPanel : BaseUnityPlugin
 			Debug.Log("KeyDown");
 			createPanel();
 		}
+		if (Input.GetKeyDown(KeyCode.Alpha9))
+		{
+			Debug.Log("serverKeyDown");
+			CreateServer();
+		}
 	}
 	public void Connect()
 	{
