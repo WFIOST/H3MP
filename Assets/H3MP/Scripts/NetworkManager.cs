@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Riptide;
 using H3MP.Core;
-
+using System.Linq;
 using FistVR;
 public class NetworkManager : MonoBehaviour {
     
@@ -22,11 +22,40 @@ public class NetworkManager : MonoBehaviour {
         instance = this;
         
     }
-   
 
+   [MessageHandler((ushort)MessageIdentifier.ToServer.Player.ENTER)]
+    public static void OnClientConnection(Message pkt)
+    {
+        ushort id = pkt.GetUShort();
+        string user = pkt.GetString();
+
+        var player = new Player(userID: id, username: user);
+        Message msg = Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.ToClient.Player.ENTER)
+                             .Add(player);
+
+        foreach (Player p in Plugin.Instance.Players.Where(p => p.ID != id))
+            Plugin.Instance.Server.Send(message: msg, toClient: p.ID);
+
+        Plugin.Instance.Players.Add(player);
+        //Plugin.Instance.Server.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.ToClient.Networking.PLAYER_LIST).Add(Plugin.Instance.Players.ToArray()),toClient: id);
+    }
+
+    [MessageHandler((ushort)MessageIdentifier.ToServer.Player.UPDATE_TRANSFORM)]
+    public static void OnPlayerMove(Message pkt)
+    {
+        var player = pkt.GetSerializable<Player>();
+
+        Plugin.Instance.Players[Plugin.Instance.Players.IndexOf(player)] = player;
+
+        Message msg = Message.Create(sendMode: MessageSendMode.Unreliable, id: MessageIdentifier.ToClient.Player.UPDATE_TRANSFORM)
+                             .Add(player);
+
+        foreach (Player p in Plugin.Instance.Players.Where(p => p.ID != player.ID))
+            Plugin.Instance.Server.Send(message: msg, toClient: p.ID);
+    }
     // Update is called once per frame
     void Update()
-    {
+    {      
        instance.playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
        instance.playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
        instance.playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
@@ -35,7 +64,7 @@ public class NetworkManager : MonoBehaviour {
        instance.playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
     }
 
-    public void FixedUpdate(Server server, Client client, bool isServer)
+    public void FixedUpdate()
     {
         
         if (Plugin.Instance.Client.IsConnected)
@@ -76,7 +105,7 @@ public class NetworkManager : MonoBehaviour {
 
     }
 
-    [MessageHandler((ushort)MessageIdentifier.Networking.PLAYER_LIST)]
+    [MessageHandler((ushort)MessageIdentifier.ToClient.Networking.PLAYER_LIST)]
     public static void HandlePlayerListMessages(Message message)
     {
         Player[] Players = message.GetSerializables<Player>();
@@ -85,13 +114,13 @@ public class NetworkManager : MonoBehaviour {
             instance.AddPlayer(player.ID, player.Username);
         }
     }
-    [MessageHandler((ushort)MessageIdentifier.Player.ENTER)]
+    [MessageHandler((ushort)MessageIdentifier.ToClient.Player.ENTER)]
     public static void HandleConnectionInformationPacketMessage(Message message)
     {
         instance.AddPlayer(message.GetUShort(), message.GetString());
         
     }
-    [MessageHandler((ushort)MessageIdentifier.Player.MOVED)]
+    [MessageHandler((ushort)MessageIdentifier.ToClient.Player.UPDATE_TRANSFORM)]
     public static void HandlePlayerMovementMessage(Message message)
     {
 
@@ -109,13 +138,13 @@ public class NetworkManager : MonoBehaviour {
     }
     private void PlayerMoveMessageSender()
     {
-        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.MOVED);
+        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.ToServer.Player.UPDATE_TRANSFORM);
        
         //Debug.Log("Packed the position/rotation etc");
         msg.Add(instance.playerUpdateStruct);
         //Debug.Log("Added Moved Packet");
         Plugin.Instance.Client.Send(msg);
-        Debug.Log("SendingPacket");
+        //Debug.Log("SendingPacket");
 
     }
     
