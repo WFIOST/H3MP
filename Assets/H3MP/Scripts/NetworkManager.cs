@@ -14,6 +14,8 @@ public class NetworkManager : MonoBehaviour {
     public List<string> PlayerList;
     public static NetworkManager instance;
     private Player playerUpdateStruct;
+    private bool hasConnected = false;
+    private bool hasUpdatedID = false;
     // Use this for initialization
     void Awake() {
         
@@ -21,9 +23,10 @@ public class NetworkManager : MonoBehaviour {
         playerUpdateStruct = new Player();
         instance = this;
        
-        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Networking.PLAYER_LIST] = HandlePlayerListMessages;
+        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Networking.PLAYER_LIST] = HandlePlayerListMessages; 
         Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.UPDATE_TRANSFORM] = HandlePlayerMovementMessage;
         Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.ENTER] = HandleConnectionInformationPacketMessage;
+        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Networking.SYNC] = HandleSyncMessage;
     }
 
 
@@ -35,6 +38,11 @@ public class NetworkManager : MonoBehaviour {
        instance.playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
        instance.playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
        instance.playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+        if (!hasUpdatedID && Plugin.Instance.Client.IsConnected)
+        {
+            playerUpdateStruct.ID = Plugin.Instance.Client.Id;
+            hasUpdatedID = true;
+        }
     }
 
     public void FixedUpdate()
@@ -89,19 +97,23 @@ public class NetworkManager : MonoBehaviour {
     //Handles Handles the message at connection where the server sends the client a list of currently connected players
     public void HandleConnectionInformationPacketMessage(Message message)
     {
-        ushort id = message.GetUShort();
-        instance.AddPlayer(id, message.GetString());
-        playerUpdateStruct.ID = id;
+       
+        instance.AddPlayer(message.GetUShort(), message.GetString());
+        hasConnected = true;
     }
-   //Handles incoming player mocement packets
-    public static void HandlePlayerMovementMessage(Message message)
+    public void HandleSyncMessage(Message message)
+    { 
+    
+    }
+        //Handles incoming player mocement packets
+        public static void HandlePlayerMovementMessage(Message message)
     {
 
         Player NewMovePacket = new Player();
        
        NewMovePacket.Deserialize(message);
         Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
-        for (int i = 0; i < instance.scenePlayers.Count; i++)
+        for (int i = 0; i <= instance.scenePlayers.Count-1; i++)
         {
             if (instance.scenePlayers[i].ID == NewMovePacket.ID)
             {

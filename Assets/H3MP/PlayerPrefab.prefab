@@ -39,7 +39,7 @@ GameObject:
   - component: {fileID: 23958113119478738}
   - component: {fileID: 136514759271754694}
   - component: {fileID: 114307051232898038}
-  m_Layer: 20
+  m_Layer: 24
   m_Name: Geo_Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -145,7 +145,7 @@ GameObject:
   - component: {fileID: 23134207431460074}
   - component: {fileID: 136001560830514740}
   - component: {fileID: 114552514165829104}
-  m_Layer: 20
+  m_Layer: 24
   m_Name: Geo_Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -215,7 +215,7 @@ GameObject:
   - component: {fileID: 23266829664385802}
   - component: {fileID: 136753101267549260}
   - component: {fileID: 114989732547280530}
-  m_Layer: 20
+  m_Layer: 24
   m_Name: Geo_LowerLink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - component: {fileID: 23945048352971206}
   - component: {fileID: 136491627668953238}
   - component: {fileID: 114395230225477364}
-  m_Layer: 20
+  m_Layer: 24
   m_Name: Geo_UpperLink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
