@@ -525,8 +525,8 @@ MonoBehaviour:
   m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Def: {fileID: 11400000, guid: b1170f5a0352e5446bdbc6fbb016a101, type: 2}
-  MatDef: {fileID: 11400000, guid: 80deeccb4c69f4347b440d14b82e80d9, type: 2}
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
   m_condition: 1
 --- !u!114 &114145425895889766
 MonoBehaviour:
@@ -539,8 +539,8 @@ MonoBehaviour:
   m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Def: {fileID: 11400000, guid: b1170f5a0352e5446bdbc6fbb016a101, type: 2}
-  MatDef: {fileID: 11400000, guid: 80deeccb4c69f4347b440d14b82e80d9, type: 2}
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
   m_condition: 1
 --- !u!114 &114261254545246424
 MonoBehaviour:
@@ -553,8 +553,8 @@ MonoBehaviour:
   m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Def: {fileID: 11400000, guid: b1170f5a0352e5446bdbc6fbb016a101, type: 2}
-  MatDef: {fileID: 11400000, guid: 80deeccb4c69f4347b440d14b82e80d9, type: 2}
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
   m_condition: 1
 --- !u!114 &114661221027856386
 MonoBehaviour:
@@ -567,8 +567,8 @@ MonoBehaviour:
   m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Def: {fileID: 11400000, guid: b1170f5a0352e5446bdbc6fbb016a101, type: 2}
-  MatDef: {fileID: 11400000, guid: 80deeccb4c69f4347b440d14b82e80d9, type: 2}
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
   m_condition: 1
 --- !u!136 &136263196620940398
 CapsuleCollider:

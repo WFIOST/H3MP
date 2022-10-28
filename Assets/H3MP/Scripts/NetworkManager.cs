@@ -20,40 +20,13 @@ public class NetworkManager : MonoBehaviour {
         DontDestroyOnLoad(gameObject);
         playerUpdateStruct = new Player();
         instance = this;
-        
+       
+        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Networking.PLAYER_LIST] = HandlePlayerListMessages;
+        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.UPDATE_TRANSFORM] = HandlePlayerMovementMessage;
+        Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.ENTER] = HandleConnectionInformationPacketMessage;
     }
 
-   [MessageHandler((ushort)MessageIdentifier.ToServer.Player.ENTER)]
-    public static void OnClientConnection(Message pkt)
-    {
-        ushort id = pkt.GetUShort();
-        string user = pkt.GetString();
 
-        var player = new Player(userID: id, username: user);
-        Message msg = Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.ToClient.Player.ENTER)
-                             .Add(player);
-
-        foreach (Player p in Plugin.Instance.Players.Where(p => p.ID != id))
-            Plugin.Instance.Server.Send(message: msg, toClient: p.ID);
-
-        Plugin.Instance.Players.Add(player);
-        //Plugin.Instance.Server.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.ToClient.Networking.PLAYER_LIST).Add(Plugin.Instance.Players.ToArray()),toClient: id);
-    }
-
-    [MessageHandler((ushort)MessageIdentifier.ToServer.Player.UPDATE_TRANSFORM)]
-    public static void OnPlayerMove(Message pkt)
-    {
-        var player = pkt.GetSerializable<Player>();
-
-        Plugin.Instance.Players[Plugin.Instance.Players.IndexOf(player)] = player;
-
-        Message msg = Message.Create(sendMode: MessageSendMode.Unreliable, id: MessageIdentifier.ToClient.Player.UPDATE_TRANSFORM)
-                             .Add(player);
-
-        foreach (Player p in Plugin.Instance.Players.Where(p => p.ID != player.ID))
-            Plugin.Instance.Server.Send(message: msg, toClient: p.ID);
-    }
-    // Update is called once per frame
     void Update()
     {      
        instance.playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
@@ -104,8 +77,7 @@ public class NetworkManager : MonoBehaviour {
         }
 
     }
-
-    [MessageHandler((ushort)MessageIdentifier.ToClient.Networking.PLAYER_LIST)]
+   
     public static void HandlePlayerListMessages(Message message)
     {
         Player[] Players = message.GetSerializables<Player>();
@@ -114,13 +86,14 @@ public class NetworkManager : MonoBehaviour {
             instance.AddPlayer(player.ID, player.Username);
         }
     }
-    [MessageHandler((ushort)MessageIdentifier.ToClient.Player.ENTER)]
-    public static void HandleConnectionInformationPacketMessage(Message message)
+    //Handles Handles the message at connection where the server sends the client a list of currently connected players
+    public void HandleConnectionInformationPacketMessage(Message message)
     {
-        instance.AddPlayer(message.GetUShort(), message.GetString());
-        
+        ushort id = message.GetUShort();
+        instance.AddPlayer(id, message.GetString());
+        playerUpdateStruct.ID = id;
     }
-    [MessageHandler((ushort)MessageIdentifier.ToClient.Player.UPDATE_TRANSFORM)]
+   //Handles incoming player mocement packets
     public static void HandlePlayerMovementMessage(Message message)
     {
 
@@ -138,7 +111,7 @@ public class NetworkManager : MonoBehaviour {
     }
     private void PlayerMoveMessageSender()
     {
-        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.ToServer.Player.UPDATE_TRANSFORM);
+        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.UPDATE_TRANSFORM);
        
         //Debug.Log("Packed the position/rotation etc");
         msg.Add(instance.playerUpdateStruct);
