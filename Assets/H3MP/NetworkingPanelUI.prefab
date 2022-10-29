@@ -1060,6 +1060,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4307852923354862}
+  - component: {fileID: 114168946159592344}
   m_Layer: 0
   m_Name: NetworkingPanelUI
   m_TagString: Untagged
@@ -1529,7 +1530,7 @@ Transform:
   m_GameObject: {fileID: 1385188046817396}
   m_LocalRotation: {x: -0, y: -0, z: -5.6843412e-14, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6434976, y: 0.64349747, z: 0.64349747}
   m_Children:
   - {fileID: 224478650830289928}
   m_Father: {fileID: 4307852923354862}
@@ -2789,8 +2790,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114206112257094742}
-        m_MethodName: AddText
+      - m_Target: {fileID: 114220606633786366}
+        m_MethodName: StopServerOrDisconnect
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2829,6 +2830,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114168946159592344
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1771135740625852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 28329e4370d8f4d4280e3650bb7a2eec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConnectToServerPanel: {fileID: 1874877266405816}
+  PlayersListPanel: {fileID: 114220606633786366}
 --- !u!114 &114169279503360372
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -4106,6 +4120,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameText: {fileID: 114033806780502386}
   PingText: {fileID: 114550033364677318}
+  KickButton: {fileID: 0}
+  BanButton: {fileID: 0}
   KickText: {fileID: 114227602045179292}
   BanText: {fileID: 114920800158658232}
 --- !u!114 &114455150527070112
@@ -4175,6 +4191,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameText: {fileID: 114059996350032850}
   PingText: {fileID: 114234721089565690}
+  KickButton: {fileID: 0}
+  BanButton: {fileID: 0}
   KickText: {fileID: 114408092382958990}
   BanText: {fileID: 114761424649731776}
 --- !u!114 &114464934421697076
@@ -5363,6 +5381,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameText: {fileID: 114545567612044606}
   PingText: {fileID: 114635527941163762}
+  KickButton: {fileID: 0}
+  BanButton: {fileID: 0}
   KickText: {fileID: 114989746298408328}
   BanText: {fileID: 114793975157631168}
 --- !u!114 &114710069368908304
@@ -5544,6 +5564,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameText: {fileID: 114737794401889682}
   PingText: {fileID: 114855730428641766}
+  KickButton: {fileID: 0}
+  BanButton: {fileID: 0}
   KickText: {fileID: 114804887527143240}
   BanText: {fileID: 114424095511735324}
 --- !u!114 &114761424649731776

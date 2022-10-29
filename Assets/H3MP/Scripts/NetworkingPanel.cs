@@ -14,7 +14,9 @@ using BepInEx;
 [BepInPlugin("h3vr.arpy.H3MP", "NetworkingPanel", "1.0.0")]
 public class NetworkingPanel : BaseUnityPlugin
 {
-
+	public static Action ServerStarted;
+	public static Action ConnectedToServer;
+	
 	public static NetworkingPanel NP;
 	public string IPaddress = "00000000";
 	private GameObject _modPanelPrefab;
@@ -58,7 +60,9 @@ public class NetworkingPanel : BaseUnityPlugin
 	public void Connect()
 	{
 		Plugin.Instance.ConnectTo(IPaddress);
-
+		
+		if (ConnectedToServer != null)
+			ConnectedToServer.Invoke();
 	}
 	public string ScreenName;
 	private void SpawnModPanel() //This spawns the disclaimer panel in your left hand
@@ -84,8 +88,10 @@ public class NetworkingPanel : BaseUnityPlugin
 	{
 		Plugin.Instance.StartServer();
 
-		panel.transform.GetChild(0).gameObject.SetActive(false);// Disable Connect UI
-		panel.transform.GetChild(1).gameObject.SetActive(true); // Enable Player list UI
+		if (ServerStarted != null)
+			ServerStarted.Invoke();
+		// panel.transform.GetChild(0).gameObject.SetActive(false);// Disable Connect UI
+		// panel.transform.GetChild(1).gameObject.SetActive(true); // Enable Player list UI
 	}
 
 	public void positionMover(NetVector3 pos)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using H3MP.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +10,9 @@ public class PlayerTab : MonoBehaviour
 	public Text NameText;
 	public Text PingText;
 	
+	public Button KickButton;
+	public Button BanButton;
+	
 	public Text KickText;
 	public Text BanText;
 
@@ -16,16 +20,21 @@ public class PlayerTab : MonoBehaviour
 	private bool _confirmBan;
 
 	private PlayersListPanel _panel;
+	private ScenePlayer _player;
 	
-	public void Initialize(PlayersListPanel panel)
+	public void Initialize(PlayersListPanel panel, ScenePlayer player)
 	{
-		// if (IsYou)
-		// 	Destroy(gameObject);
-
 		_panel = panel;
+		_player = player;
 
-		NameText.text = "Player #1";
-		PingText.text = "420ms";
+		NameText.text = player.Name;
+		PingText.text = "???ms";
+
+		if (!Plugin.Instance.IsServer || player.ID == Plugin.Instance.Client.Id)
+		{
+			KickButton.gameObject.SetActive(false);
+			BanButton.gameObject.SetActive(false);
+		}
 	}
 	
 	public void KickClicked()

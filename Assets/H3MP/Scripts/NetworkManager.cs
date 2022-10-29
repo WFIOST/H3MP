@@ -6,9 +6,10 @@ using Riptide;
 using H3MP.Core;
 using System.Linq;
 using FistVR;
-public class NetworkManager : MonoBehaviour {
+public class NetworkManager : MonoBehaviour
+{
+    public static Action PlayerConnectedEvent;
     
-
     public List<ScenePlayer> scenePlayers = new List<ScenePlayer>();
     public GameObject PlayerPrefab;
     public List<string> PlayerList;
@@ -62,7 +63,9 @@ public class NetworkManager : MonoBehaviour {
         JeffSP.ID = id;
         JeffSP.Name = username;
         JeffSP.namePlate.text = username;
-
+        
+        if (PlayerConnectedEvent != null)
+            PlayerConnectedEvent.Invoke();
     }
     public virtual void ScoreBoardUpdate()
     { 
