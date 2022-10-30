@@ -51,10 +51,8 @@ public class NetworkManager : MonoBehaviour
 
     public void FixedUpdate()
     {
-        
         if (Plugin.Instance.Client.IsConnected)
         {
-           // Debug.Log("Network Update Called");
             PlayerMoveMessageSender();
         }
     }
@@ -130,11 +128,8 @@ public class NetworkManager : MonoBehaviour
     {
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.UPDATE_TRANSFORM);
        
-        //Debug.Log("Packed the position/rotation etc");
         msg.Add(playerUpdateStruct);
-        //Debug.Log("Added Moved Packet");
         Plugin.Instance.Client.Send(msg);
-        //Debug.Log("SendingPacket");
 
     }
     
