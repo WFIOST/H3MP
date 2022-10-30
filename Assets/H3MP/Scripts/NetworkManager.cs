@@ -100,7 +100,6 @@ public class NetworkManager : MonoBehaviour
     //Handles Handles the message at connection where the server sends the client a list of currently connected players
     public void HandleConnectionInformationPacketMessage(Message message)
     {
-       
         AddPlayer(message.GetUShort(), message.GetString());
         hasConnected = true;
     }

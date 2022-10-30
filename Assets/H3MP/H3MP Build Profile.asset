@@ -11,14 +11,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afed54a239594b8abd631a8047a54987, type: 3}
   m_Name: H3MP Build Profile
   m_EditorClassIdentifier: 
-  PackageName: MpMeatkit
-  Author: Wifost
-  Version: 0.0.1
+  PackageName: H3MP
+  Author: WFIOST
+  Version: 0.1.0
   Icon: {fileID: 2800000, guid: 72bfff337624ec0459c46aebab5e81a1, type: 3}
   ReadMe: {fileID: 102900000, guid: f291bb48e3add3740b96366aa1abcaab, type: 3}
   WebsiteURL: 
   Description: 
-  AdditionalDependencies: []
+  AdditionalDependencies:
+  - nrgill28-Sodalite-1.4.0
   StripNamespaces: 1
   AdditionalNamespaces: []
   ApplyHarmonyPatches: 1
