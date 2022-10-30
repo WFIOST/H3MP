@@ -33,12 +33,12 @@ public class NetworkManager : MonoBehaviour
 
     void Update()
     {      
-       instance.playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
-       instance.playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
-       instance.playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
-       instance.playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
-       instance.playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
-       instance.playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+       playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
+       playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
+       playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
+       playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
+       playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
+       playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
         if (!hasUpdatedID && Plugin.Instance.Client.IsConnected)
         {
             playerUpdateStruct.ID = Plugin.Instance.Client.Id;
@@ -89,19 +89,19 @@ public class NetworkManager : MonoBehaviour
 
     }
    
-    public static void HandlePlayerListMessages(Message message)
+    public void HandlePlayerListMessages(Message message)
     {
         Player[] Players = message.GetSerializables<Player>();
         foreach (Player player in Players)
         {
-            instance.AddPlayer(player.ID, player.Username);
+            AddPlayer(player.ID, player.Username);
         }
     }
     //Handles Handles the message at connection where the server sends the client a list of currently connected players
     public void HandleConnectionInformationPacketMessage(Message message)
     {
        
-        instance.AddPlayer(message.GetUShort(), message.GetString());
+        AddPlayer(message.GetUShort(), message.GetString());
         hasConnected = true;
     }
     public void HandleSyncMessage(Message message)
@@ -109,18 +109,18 @@ public class NetworkManager : MonoBehaviour
     
     }
         //Handles incoming player mocement packets
-        public static void HandlePlayerMovementMessage(Message message)
+    public void HandlePlayerMovementMessage(Message message)
     {
 
         Player NewMovePacket = new Player();
        
        NewMovePacket.Deserialize(message);
         Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
-        for (int i = 0; i <= instance.scenePlayers.Count-1; i++)
+        for (int i = 0; i <= scenePlayers.Count-1; i++)
         {
-            if (instance.scenePlayers[i].ID == NewMovePacket.ID)
+            if (scenePlayers[i].ID == NewMovePacket.ID)
             {
-                instance.scenePlayers[i].UpdatePlayer(NewMovePacket);
+                scenePlayers[i].UpdatePlayer(NewMovePacket);
             }
         }
     }
@@ -129,7 +129,7 @@ public class NetworkManager : MonoBehaviour
         Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.UPDATE_TRANSFORM);
        
         //Debug.Log("Packed the position/rotation etc");
-        msg.Add(instance.playerUpdateStruct);
+        msg.Add(playerUpdateStruct);
         //Debug.Log("Added Moved Packet");
         Plugin.Instance.Client.Send(msg);
         //Debug.Log("SendingPacket");
