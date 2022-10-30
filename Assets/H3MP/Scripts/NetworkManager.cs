@@ -42,6 +42,7 @@ public class NetworkManager : MonoBehaviour
         if (!hasUpdatedID && Plugin.Instance.Client.IsConnected)
         {
             playerUpdateStruct.ID = Plugin.Instance.Client.Id;
+            playerUpdateStruct.Username = Plugin.Instance.Username.Value;
             hasUpdatedID = true;
         }
     }
