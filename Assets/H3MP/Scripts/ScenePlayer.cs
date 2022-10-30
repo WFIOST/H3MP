@@ -23,8 +23,7 @@ public class ScenePlayer : MonoBehaviour {
 	}
 	public void UpdatePlayer(Player PS)
     {
-		Debug.Log("UpdatePlayerCalled");
-		Head.transform.SetPositionAndRotation(PS.Head.Position, PS.Head.Rotation);		
+	    Head.transform.SetPositionAndRotation(PS.Head.Position, PS.Head.Rotation);		
 		LeftHand.transform.SetPositionAndRotation(PS.LeftHand.Position, PS.LeftHand.Rotation);
 		RightHand.transform.SetPositionAndRotation(PS.RightHand.Position, PS.RightHand.Rotation);
 		
