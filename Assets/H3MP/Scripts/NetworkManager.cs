@@ -24,6 +24,8 @@ public class NetworkManager : MonoBehaviour
         playerUpdateStruct = new Player();
         instance = this;
        
+        // Plugin.Instance.Client.Send(Message.Create());
+        
         Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Networking.PLAYER_LIST] = HandlePlayerListMessages; 
         Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.UPDATE_TRANSFORM] = HandlePlayerMovementMessage;
         Plugin.Instance.ClientMessageHandlers[(ushort)MessageIdentifier.Player.ENTER] = HandleConnectionInformationPacketMessage;
@@ -115,7 +117,7 @@ public class NetworkManager : MonoBehaviour
         Player NewMovePacket = new Player();
        
        NewMovePacket.Deserialize(message);
-        Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
+        // Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
         for (int i = 0; i <= scenePlayers.Count-1; i++)
         {
             if (scenePlayers[i].ID == NewMovePacket.ID)
