@@ -1,4 +1,5 @@
 ﻿using System;
+using FistVR;
 using H3MP.Core;
 using UnityEngine;
 
@@ -19,11 +20,13 @@ namespace H3MP.Scripts
                 Destroy(this);
                 throw new Exception("No rigidbody found on object " + gameObject.name);
             }
-            
             _rigidbody = rb;
-            
-            SetData();
-            
+
+            var fvr = GetComponent<FVRPhysicalObject>();
+            if (fvr == null) fvr = GetComponentInChildren<FVRPhysicalObject>();
+            Data.ObjectID = fvr == null ? "" : fvr.ObjectWrapper.ItemID;
+
+            SetData();            
             NetworkManager.instance.RegisterObject(this);
         }
 
@@ -37,6 +40,7 @@ namespace H3MP.Scripts
             Data.Transform.Position = transform.position;
             Data.Transform.Rotation = transform.rotation;
             Data.Velocity = _rigidbody.velocity;
+            
         }
         
         public void SetID(int id)

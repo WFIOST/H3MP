@@ -177,8 +177,7 @@ public class NetworkManager : MonoBehaviour
         _objects[id].Die();
         _objects.Remove(id);
     }
-
-
+    
     private void OnObjectBirth(Message msg)
     {
         
