@@ -27,7 +27,7 @@ public class NetworkManager : MonoBehaviour
     }
 
     private Player playerUpdateStruct;
-    private bool hasConnected;
+    
     private bool hasUpdatedID;
 
     private Dictionary<int, NetworkedBehaviour> _objects;
@@ -55,12 +55,12 @@ public class NetworkManager : MonoBehaviour
 
     void Update()
     {
-        playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
-        playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
-        playerUpdateStruct.LeftHand.Position = GM.CurrentMovementManager.Hands[0].transform.position;
-        playerUpdateStruct.LeftHand.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
-        playerUpdateStruct.RightHand.Position = GM.CurrentMovementManager.Hands[1].transform.position;
-        playerUpdateStruct.RightHand.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+        playerUpdateStruct.Head.position = GM.CurrentPlayerBody.Head.position;
+        playerUpdateStruct.Head.rotation = GM.CurrentPlayerBody.Head.rotation;
+        playerUpdateStruct.LeftHand.Transform.position = GM.CurrentMovementManager.Hands[0].transform.position;
+        playerUpdateStruct.LeftHand.Transform.rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
+        playerUpdateStruct.RightHand.Transform.position = GM.CurrentMovementManager.Hands[1].transform.position;
+        playerUpdateStruct.RightHand.Transform.rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
         if (!hasUpdatedID && _networking.Client.IsConnected)
         {
             playerUpdateStruct.ID = _networking.Client.Id;
@@ -105,8 +105,7 @@ public class NetworkManager : MonoBehaviour
     //Handles Handles the message at connection where the server sends the client a list of currently connected players
     public void HandleConnectionInformationPacketMessage(Message message)
     {
-        AddPlayer(message.GetUShort(), message.GetString());
-        hasConnected = true;
+        AddPlayer(message.GetUShort(), message.GetString());       
     }
 
     //Handles incoming player mocement packets
