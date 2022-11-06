@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 4662570890609478}
   - component: {fileID: 33435941609797136}
   - component: {fileID: 23476703250541874}
+  - component: {fileID: 114475323166343806}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -249,6 +250,7 @@ GameObject:
   - component: {fileID: 4409242885064074}
   - component: {fileID: 33673691139357284}
   - component: {fileID: 23079261013514066}
+  - component: {fileID: 114175553625484476}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
@@ -307,8 +309,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1028148672601040}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.7332622, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.955, y: 1.361, z: 3.7562838}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4179467770442852}
@@ -790,6 +792,325 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &114175553625484476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1937062358050256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da16ccb3966ce64e8daae860574135a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandSource: 1
+  Trigger_Button:
+    actionPath: 
+    needsReinit: 0
+  Trigger_Touch:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Button:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Touch:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Button:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Touch:
+    actionPath: 
+    needsReinit: 0
+  A_Button:
+    actionPath: 
+    needsReinit: 0
+  B_Button:
+    actionPath: 
+    needsReinit: 0
+  Grip_Button:
+    actionPath: 
+    needsReinit: 0
+  Grip_Touch:
+    actionPath: 
+    needsReinit: 0
+  Trigger_Axis:
+    actionPath: 
+    needsReinit: 0
+  Grip_Squeeze:
+    actionPath: 
+    needsReinit: 0
+  Thumb_Squeeze:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Axes:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Axes:
+    actionPath: 
+    needsReinit: 0
+  Pose:
+    actionPath: 
+    needsReinit: 0
+  Vibration:
+    actionPath: 
+    needsReinit: 0
+  Skeleton:
+    actionPath: 
+    needsReinit: 0
+  DebugPrintOutput: 0
+  DisplayOut: {fileID: 0}
+  m_initState: 0
+  m_state: 0
+  Mode: 0
+  CMode: 0
+  DMode: 0
+  IsInDemoMode: 0
+  WholeRig: {fileID: 0}
+  Head: {fileID: 0}
+  MovementManager: {fileID: 0}
+  IsInStreamlinedMode: 0
+  Display_Controller: {fileID: 0}
+  Display_Controller_Vive: {fileID: 0}
+  Display_Controller_Touch: {fileID: 0}
+  Display_Controller_Index: {fileID: 0}
+  Display_Controller_WMR: {fileID: 0}
+  Display_Controller_RiftS: {fileID: 0}
+  Display_Controller_Cosmos: {fileID: 0}
+  Display_Controller_HPR2: {fileID: 0}
+  Display_Controller_Quest2: {fileID: 0}
+  Display_InteractionSphere: {fileID: 0}
+  Display_InteractionSphere_Palm: {fileID: 0}
+  SausageFingersPrefab: {fileID: 0}
+  m_sausageFingersSpawned: {fileID: 0}
+  Collider_Fingers: {fileID: 0}
+  Collider_Palm: {fileID: 0}
+  PointingTransform: {fileID: 0}
+  TouchSphere: {fileID: 0}
+  TouchSphere_Palm: {fileID: 0}
+  TouchSphereMat_NoInteractable: {fileID: 0}
+  TouchSpheteMat_Interactable: {fileID: 0}
+  m_touchSphereMatInteractable: 0
+  m_touchSphereMatInteractablePalm: 0
+  m_storedInitialPointingTransformPos: {x: 0, y: 0, z: 0}
+  m_storedInitialPointingTransformDir: {x: 0, y: 0, z: 0, w: 0}
+  PoseOverride: {fileID: 0}
+  m_rigidbody: {fileID: 0}
+  PalmTransform: {fileID: 0}
+  MagPose_Vive: {fileID: 0}
+  MagPose_Rift: {fileID: 0}
+  MagPose_RiftS: {fileID: 0}
+  MagPose_Index: {fileID: 0}
+  MagPose_WMR: {fileID: 0}
+  Input:
+    Hand: {fileID: 0}
+    TriggerUp: 0
+    TriggerDown: 0
+    TriggerPressed: 0
+    TriggerFloat: 0
+    TriggerTouchUp: 0
+    TriggerTouchDown: 0
+    TriggerTouched: 0
+    GripUp: 0
+    GripDown: 0
+    GripPressed: 0
+    GripTouchUp: 0
+    GripTouchDown: 0
+    GripTouched: 0
+    TouchpadUp: 0
+    TouchpadDown: 0
+    TouchpadPressed: 0
+    TouchpadTouchUp: 0
+    TouchpadTouchDown: 0
+    TouchpadTouched: 0
+    TouchpadAxes: {x: 0, y: 0}
+    TouchpadNorthUp: 0
+    TouchpadNorthDown: 0
+    TouchpadNorthPressed: 0
+    TouchpadSouthUp: 0
+    TouchpadSouthDown: 0
+    TouchpadSouthPressed: 0
+    TouchpadWestUp: 0
+    TouchpadWestDown: 0
+    TouchpadWestPressed: 0
+    TouchpadEastUp: 0
+    TouchpadEastDown: 0
+    TouchpadEastPressed: 0
+    TouchpadCenterUp: 0
+    TouchpadCenterDown: 0
+    TouchpadCenterPressed: 0
+    BYButtonUp: 0
+    BYButtonDown: 0
+    BYButtonPressed: 0
+    AXButtonUp: 0
+    AXButtonDown: 0
+    AXButtonPressed: 0
+    Secondary2AxisInputUp: 0
+    Secondary2AxisInputDown: 0
+    Secondary2AxisInputPressed: 0
+    Secondary2AxisInputTouchUp: 0
+    Secondary2AxisInputTouchDown: 0
+    Secondary2AxisInputTouched: 0
+    Secondary2AxisInputAxes: {x: 0, y: 0}
+    Secondary2AxisNorthUp: 0
+    Secondary2AxisNorthDown: 0
+    Secondary2AxisNorthPressed: 0
+    Secondary2AxisSouthUp: 0
+    Secondary2AxisSouthDown: 0
+    Secondary2AxisSouthPressed: 0
+    Secondary2AxisWestUp: 0
+    Secondary2AxisWestDown: 0
+    Secondary2AxisWestPressed: 0
+    Secondary2AxisEastUp: 0
+    Secondary2AxisEastDown: 0
+    Secondary2AxisEastPressed: 0
+    Secondary2AxisCenterUp: 0
+    Secondary2AxisCenterDown: 0
+    Secondary2AxisCenterPressed: 0
+    FingerCurl_Thumb: 0
+    FingerCurl_Index: 0
+    FingerCurl_Middle: 0
+    FingerCurl_Ring: 0
+    FingerCurl_Pinky: 0
+    LastCurlAverage: 0
+    m_pos: {x: 0, y: 0, z: 0}
+    m_rot: {x: 0, y: 0, z: 0, w: 0}
+    m_palmpos: {x: 0, y: 0, z: 0}
+    m_palmrot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredPos: {x: 0, y: 0, z: 0}
+    FilteredRot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredPalmPos: {x: 0, y: 0, z: 0}
+    FilteredPalmRot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredForward: {x: 0, y: 0, z: 0}
+    FilteredPointingPos: {x: 0, y: 0, z: 0}
+    FilteredPointingForward: {x: 0, y: 0, z: 0}
+    m_up: {x: 0, y: 0, z: 0}
+    m_right: {x: 0, y: 0, z: 0}
+    m_forward: {x: 0, y: 0, z: 0}
+    FilteredUp: {x: 0, y: 0, z: 0}
+    FilteredRight: {x: 0, y: 0, z: 0}
+    VelLinearLocal: {x: 0, y: 0, z: 0}
+    VelAngularLocal: {x: 0, y: 0, z: 0}
+    VelLinearWorld: {x: 0, y: 0, z: 0}
+    VelAngularWorld: {x: 0, y: 0, z: 0}
+    IsGrabUp: 0
+    IsGrabDown: 0
+    IsGrabbing: 0
+    PosUltraFilter: {x: 0, y: 0, z: 0}
+    RotUltraFilter: {x: 0, y: 0, z: 0, w: 0}
+    m_oneEuroLocalPosition: {x: 0, y: 0, z: 0}
+    m_oneEuroLocalPalmPosition: {x: 0, y: 0, z: 0}
+    m_oneEuroLocalPointingPosition: {x: 0, y: 0, z: 0}
+    OneEuroRotation: {x: 0, y: 0, z: 0, w: 0}
+    OneEuroPalmRotation: {x: 0, y: 0, z: 0, w: 0}
+    OneEuroPointRotation: {x: 0, y: 0, z: 0, w: 0}
+    LastPalmPos1: {x: 0, y: 0, z: 0}
+    LastPalmPos2: {x: 0, y: 0, z: 0}
+    EuroTester: {fileID: 0}
+  PhysTracker:
+    m_CurrentSampleIndex: -1
+    m_LastOffsetPosition: {x: 0, y: 0, z: 0}
+    m_LastDirectionPosition: {x: 0, y: 0, z: 0}
+    m_LastRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_hasOverrider: 0
+  m_overrider:
+    m_hand: {fileID: 0}
+    Type: 0
+    m_triggerPressed: 0
+    m_triggerUp: 0
+    m_triggerDown: 0
+    m_triggerFloat: 0
+    Real_triggerPressed: 0
+    Real_triggerUp: 0
+    Real_triggerDown: 0
+    Real_triggerFloat: 0
+  WristMenuTarget: {fileID: 0}
+  WristMenuTarget_Index: {fileID: 0}
+  m_wristmenu: {fileID: 0}
+  m_isWristMenuActive: 0
+  GrabLaser: {fileID: 0}
+  BlueLaser: {fileID: 0}
+  RedLaser: {fileID: 0}
+  m_isGrabLaserActive: 0
+  GrabLaserMask:
+    serializedVersion: 2
+    m_Bits: 0
+  PointingLaser: {fileID: 0}
+  m_currentPointable: {fileID: 0}
+  PointingLayerMask_UI:
+    serializedVersion: 2
+    m_Bits: 0
+  PointingLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  BracingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TouchpadArrowTarget: {fileID: 0}
+  Buzzer: {fileID: 0}
+  m_curBuzz: {fileID: 0}
+  m_isBuzzing: 0
+  m_buzztime: 0
+  m_canMadeGrabReleaseSoundThisFrame: 1
+  IsGripToggle: 0
+  OtherHand: {fileID: 0}
+  m_aud: {fileID: 0}
+  m_rb: {fileID: 0}
+  LM_RawGrab:
+    serializedVersion: 2
+    m_Bits: 0
+  m_rawGrabCols: []
+  m_closestPossibleInteractable: {fileID: 0}
+  m_isClosestInteractableInPalm: 0
+  m_currentInteractable: {fileID: 0}
+  m_currentHoveredQuickbeltSlot: {fileID: 0}
+  m_currentHoveredQuickbeltSlotDirty: {fileID: 0}
+  DeviceName: 
+  m_hasInit: 0
+  IsThisTheRightHand: 0
+  forcetubevr: {fileID: 0}
+  frequency: 1
+  oldFrequency: 0
+  frequencyDiffPeriod: 0
+  timeTillNextPulse: 0
+  amplitude: 1
+  doHaptics: 0
+  m_maxVel: 0
+  m_maxReal: 0
+  m_timeSinceLastGripButtonDown: 0
+  m_timeGripButtonHasBeenHeld: 0
+  LM_Grabbity_Beam:
+    serializedVersion: 2
+    m_Bits: 0
+  LM_Grabbity_BeamTrigger:
+    serializedVersion: 2
+    m_Bits: 0
+  LM_Grabbity_Block:
+    serializedVersion: 2
+    m_Bits: 0
+  AudEvent_Grabbity_Grab:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  AudEvent_Grabbity_Flick:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  AudEvent_Grabbity_Hover:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  m_grabityHoveredObject: {fileID: 0}
+  m_selectedObj: {fileID: 0}
+  m_isObjectInTransit: 0
+  m_reset: 1
+  Grabbity_HoverSphere: {fileID: 0}
+  Grabbity_GrabSphere: {fileID: 0}
+  LastPos: {x: 0, y: 0, z: 0}
+  LastRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114187724230752236
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -835,6 +1156,8 @@ MonoBehaviour:
   ID: 1
   SosigHead: {fileID: 1512180776407704}
   SosigTorso: {fileID: 1110243865625822}
+  LeftFakeHand: {fileID: 114175553625484476}
+  RightFakeHand: {fileID: 114475323166343806}
 --- !u!114 &114307051232898038
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -863,6 +1186,325 @@ MonoBehaviour:
   Def: {fileID: 0}
   MatDef: {fileID: 0}
   m_condition: 1
+--- !u!114 &114475323166343806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1187776249714314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4da16ccb3966ce64e8daae860574135a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  HandSource: 2
+  Trigger_Button:
+    actionPath: 
+    needsReinit: 0
+  Trigger_Touch:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Button:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Touch:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Button:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Touch:
+    actionPath: 
+    needsReinit: 0
+  A_Button:
+    actionPath: 
+    needsReinit: 0
+  B_Button:
+    actionPath: 
+    needsReinit: 0
+  Grip_Button:
+    actionPath: 
+    needsReinit: 0
+  Grip_Touch:
+    actionPath: 
+    needsReinit: 0
+  Trigger_Axis:
+    actionPath: 
+    needsReinit: 0
+  Grip_Squeeze:
+    actionPath: 
+    needsReinit: 0
+  Thumb_Squeeze:
+    actionPath: 
+    needsReinit: 0
+  Primary2Axis_Axes:
+    actionPath: 
+    needsReinit: 0
+  Secondary2Axis_Axes:
+    actionPath: 
+    needsReinit: 0
+  Pose:
+    actionPath: 
+    needsReinit: 0
+  Vibration:
+    actionPath: 
+    needsReinit: 0
+  Skeleton:
+    actionPath: 
+    needsReinit: 0
+  DebugPrintOutput: 0
+  DisplayOut: {fileID: 0}
+  m_initState: 0
+  m_state: 0
+  Mode: 0
+  CMode: 0
+  DMode: 0
+  IsInDemoMode: 0
+  WholeRig: {fileID: 0}
+  Head: {fileID: 0}
+  MovementManager: {fileID: 0}
+  IsInStreamlinedMode: 0
+  Display_Controller: {fileID: 0}
+  Display_Controller_Vive: {fileID: 0}
+  Display_Controller_Touch: {fileID: 0}
+  Display_Controller_Index: {fileID: 0}
+  Display_Controller_WMR: {fileID: 0}
+  Display_Controller_RiftS: {fileID: 0}
+  Display_Controller_Cosmos: {fileID: 0}
+  Display_Controller_HPR2: {fileID: 0}
+  Display_Controller_Quest2: {fileID: 0}
+  Display_InteractionSphere: {fileID: 0}
+  Display_InteractionSphere_Palm: {fileID: 0}
+  SausageFingersPrefab: {fileID: 0}
+  m_sausageFingersSpawned: {fileID: 0}
+  Collider_Fingers: {fileID: 0}
+  Collider_Palm: {fileID: 0}
+  PointingTransform: {fileID: 0}
+  TouchSphere: {fileID: 0}
+  TouchSphere_Palm: {fileID: 0}
+  TouchSphereMat_NoInteractable: {fileID: 0}
+  TouchSpheteMat_Interactable: {fileID: 0}
+  m_touchSphereMatInteractable: 0
+  m_touchSphereMatInteractablePalm: 0
+  m_storedInitialPointingTransformPos: {x: 0, y: 0, z: 0}
+  m_storedInitialPointingTransformDir: {x: 0, y: 0, z: 0, w: 0}
+  PoseOverride: {fileID: 0}
+  m_rigidbody: {fileID: 0}
+  PalmTransform: {fileID: 0}
+  MagPose_Vive: {fileID: 0}
+  MagPose_Rift: {fileID: 0}
+  MagPose_RiftS: {fileID: 0}
+  MagPose_Index: {fileID: 0}
+  MagPose_WMR: {fileID: 0}
+  Input:
+    Hand: {fileID: 0}
+    TriggerUp: 0
+    TriggerDown: 0
+    TriggerPressed: 0
+    TriggerFloat: 0
+    TriggerTouchUp: 0
+    TriggerTouchDown: 0
+    TriggerTouched: 0
+    GripUp: 0
+    GripDown: 0
+    GripPressed: 0
+    GripTouchUp: 0
+    GripTouchDown: 0
+    GripTouched: 0
+    TouchpadUp: 0
+    TouchpadDown: 0
+    TouchpadPressed: 0
+    TouchpadTouchUp: 0
+    TouchpadTouchDown: 0
+    TouchpadTouched: 0
+    TouchpadAxes: {x: 0, y: 0}
+    TouchpadNorthUp: 0
+    TouchpadNorthDown: 0
+    TouchpadNorthPressed: 0
+    TouchpadSouthUp: 0
+    TouchpadSouthDown: 0
+    TouchpadSouthPressed: 0
+    TouchpadWestUp: 0
+    TouchpadWestDown: 0
+    TouchpadWestPressed: 0
+    TouchpadEastUp: 0
+    TouchpadEastDown: 0
+    TouchpadEastPressed: 0
+    TouchpadCenterUp: 0
+    TouchpadCenterDown: 0
+    TouchpadCenterPressed: 0
+    BYButtonUp: 0
+    BYButtonDown: 0
+    BYButtonPressed: 0
+    AXButtonUp: 0
+    AXButtonDown: 0
+    AXButtonPressed: 0
+    Secondary2AxisInputUp: 0
+    Secondary2AxisInputDown: 0
+    Secondary2AxisInputPressed: 0
+    Secondary2AxisInputTouchUp: 0
+    Secondary2AxisInputTouchDown: 0
+    Secondary2AxisInputTouched: 0
+    Secondary2AxisInputAxes: {x: 0, y: 0}
+    Secondary2AxisNorthUp: 0
+    Secondary2AxisNorthDown: 0
+    Secondary2AxisNorthPressed: 0
+    Secondary2AxisSouthUp: 0
+    Secondary2AxisSouthDown: 0
+    Secondary2AxisSouthPressed: 0
+    Secondary2AxisWestUp: 0
+    Secondary2AxisWestDown: 0
+    Secondary2AxisWestPressed: 0
+    Secondary2AxisEastUp: 0
+    Secondary2AxisEastDown: 0
+    Secondary2AxisEastPressed: 0
+    Secondary2AxisCenterUp: 0
+    Secondary2AxisCenterDown: 0
+    Secondary2AxisCenterPressed: 0
+    FingerCurl_Thumb: 0
+    FingerCurl_Index: 0
+    FingerCurl_Middle: 0
+    FingerCurl_Ring: 0
+    FingerCurl_Pinky: 0
+    LastCurlAverage: 0
+    m_pos: {x: 0, y: 0, z: 0}
+    m_rot: {x: 0, y: 0, z: 0, w: 0}
+    m_palmpos: {x: 0, y: 0, z: 0}
+    m_palmrot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredPos: {x: 0, y: 0, z: 0}
+    FilteredRot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredPalmPos: {x: 0, y: 0, z: 0}
+    FilteredPalmRot: {x: 0, y: 0, z: 0, w: 0}
+    FilteredForward: {x: 0, y: 0, z: 0}
+    FilteredPointingPos: {x: 0, y: 0, z: 0}
+    FilteredPointingForward: {x: 0, y: 0, z: 0}
+    m_up: {x: 0, y: 0, z: 0}
+    m_right: {x: 0, y: 0, z: 0}
+    m_forward: {x: 0, y: 0, z: 0}
+    FilteredUp: {x: 0, y: 0, z: 0}
+    FilteredRight: {x: 0, y: 0, z: 0}
+    VelLinearLocal: {x: 0, y: 0, z: 0}
+    VelAngularLocal: {x: 0, y: 0, z: 0}
+    VelLinearWorld: {x: 0, y: 0, z: 0}
+    VelAngularWorld: {x: 0, y: 0, z: 0}
+    IsGrabUp: 0
+    IsGrabDown: 0
+    IsGrabbing: 0
+    PosUltraFilter: {x: 0, y: 0, z: 0}
+    RotUltraFilter: {x: 0, y: 0, z: 0, w: 0}
+    m_oneEuroLocalPosition: {x: 0, y: 0, z: 0}
+    m_oneEuroLocalPalmPosition: {x: 0, y: 0, z: 0}
+    m_oneEuroLocalPointingPosition: {x: 0, y: 0, z: 0}
+    OneEuroRotation: {x: 0, y: 0, z: 0, w: 0}
+    OneEuroPalmRotation: {x: 0, y: 0, z: 0, w: 0}
+    OneEuroPointRotation: {x: 0, y: 0, z: 0, w: 0}
+    LastPalmPos1: {x: 0, y: 0, z: 0}
+    LastPalmPos2: {x: 0, y: 0, z: 0}
+    EuroTester: {fileID: 0}
+  PhysTracker:
+    m_CurrentSampleIndex: -1
+    m_LastOffsetPosition: {x: 0, y: 0, z: 0}
+    m_LastDirectionPosition: {x: 0, y: 0, z: 0}
+    m_LastRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_hasOverrider: 0
+  m_overrider:
+    m_hand: {fileID: 0}
+    Type: 0
+    m_triggerPressed: 0
+    m_triggerUp: 0
+    m_triggerDown: 0
+    m_triggerFloat: 0
+    Real_triggerPressed: 0
+    Real_triggerUp: 0
+    Real_triggerDown: 0
+    Real_triggerFloat: 0
+  WristMenuTarget: {fileID: 0}
+  WristMenuTarget_Index: {fileID: 0}
+  m_wristmenu: {fileID: 0}
+  m_isWristMenuActive: 0
+  GrabLaser: {fileID: 0}
+  BlueLaser: {fileID: 0}
+  RedLaser: {fileID: 0}
+  m_isGrabLaserActive: 0
+  GrabLaserMask:
+    serializedVersion: 2
+    m_Bits: 0
+  PointingLaser: {fileID: 0}
+  m_currentPointable: {fileID: 0}
+  PointingLayerMask_UI:
+    serializedVersion: 2
+    m_Bits: 0
+  PointingLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  BracingMask:
+    serializedVersion: 2
+    m_Bits: 0
+  TouchpadArrowTarget: {fileID: 0}
+  Buzzer: {fileID: 0}
+  m_curBuzz: {fileID: 0}
+  m_isBuzzing: 0
+  m_buzztime: 0
+  m_canMadeGrabReleaseSoundThisFrame: 1
+  IsGripToggle: 0
+  OtherHand: {fileID: 0}
+  m_aud: {fileID: 0}
+  m_rb: {fileID: 0}
+  LM_RawGrab:
+    serializedVersion: 2
+    m_Bits: 0
+  m_rawGrabCols: []
+  m_closestPossibleInteractable: {fileID: 0}
+  m_isClosestInteractableInPalm: 0
+  m_currentInteractable: {fileID: 0}
+  m_currentHoveredQuickbeltSlot: {fileID: 0}
+  m_currentHoveredQuickbeltSlotDirty: {fileID: 0}
+  DeviceName: 
+  m_hasInit: 0
+  IsThisTheRightHand: 0
+  forcetubevr: {fileID: 0}
+  frequency: 1
+  oldFrequency: 0
+  frequencyDiffPeriod: 0
+  timeTillNextPulse: 0
+  amplitude: 1
+  doHaptics: 0
+  m_maxVel: 0
+  m_maxReal: 0
+  m_timeSinceLastGripButtonDown: 0
+  m_timeGripButtonHasBeenHeld: 0
+  LM_Grabbity_Beam:
+    serializedVersion: 2
+    m_Bits: 0
+  LM_Grabbity_BeamTrigger:
+    serializedVersion: 2
+    m_Bits: 0
+  LM_Grabbity_Block:
+    serializedVersion: 2
+    m_Bits: 0
+  AudEvent_Grabbity_Grab:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  AudEvent_Grabbity_Flick:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  AudEvent_Grabbity_Hover:
+    Clips: []
+    VolumeRange: {x: 1, y: 1}
+    PitchRange: {x: 1, y: 1}
+    ClipLengthRange: {x: 1, y: 1}
+  m_grabityHoveredObject: {fileID: 0}
+  m_selectedObj: {fileID: 0}
+  m_isObjectInTransit: 0
+  m_reset: 1
+  Grabbity_HoverSphere: {fileID: 0}
+  Grabbity_GrabSphere: {fileID: 0}
+  LastPos: {x: 0, y: 0, z: 0}
+  LastRotation: {x: 0, y: 0, z: 0, w: 0}
 --- !u!114 &114481946806626696
 MonoBehaviour:
   m_ObjectHideFlags: 1

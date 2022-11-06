@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using H3MP.Core;
+using FistVR;
 public class ScenePlayer : MonoBehaviour {
 
 	public GameObject Head;
@@ -18,6 +19,8 @@ public class ScenePlayer : MonoBehaviour {
 	public ushort ID;
 	public GameObject SosigHead;
 	public GameObject SosigTorso;
+	public FVRViveHand LeftFakeHand;
+	public FVRViveHand RightFakeHand;
 	// Use this for initialization
 	void Start () {
 		
@@ -39,4 +42,23 @@ public class ScenePlayer : MonoBehaviour {
 		RightHand.transform.SetPositionAndRotation(PS.RightHand.Transform.position, PS.RightHand.Transform.rotation);
 		
 	}
+	public void ReceiveInputMessage(InputUpdate IU)
+    {		
+			var hand = IU.isLeftHand ? LeftFakeHand : RightFakeHand;
+			switch (IU.Input)
+            {
+				case InputUpdate.Inputs.GRIP_DOWN:
+					hand.Input.IsGrabDown = true;
+					hand.Input.IsGrabbing = true;
+					break;
+				case InputUpdate.Inputs.GRIP_UP:
+					hand.Input.IsGrabbing = false;
+					hand.Input.IsGrabUp = true;
+					break;
+            }
+        
+		
+			
+		
+    }
 }
