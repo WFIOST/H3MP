@@ -91,7 +91,7 @@ GameObject:
   - component: {fileID: 4662570890609478}
   - component: {fileID: 33435941609797136}
   - component: {fileID: 23476703250541874}
-  - component: {fileID: 114475323166343806}
+  - component: {fileID: 114849966721187570}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 4409242885064074}
   - component: {fileID: 33673691139357284}
   - component: {fileID: 23079261013514066}
-  - component: {fileID: 114175553625484476}
+  - component: {fileID: 114314685314872740}
   m_Layer: 0
   m_Name: LeftHand
   m_TagString: Untagged
@@ -792,7 +792,68 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &114175553625484476
+--- !u!114 &114187724230752236
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695913452460228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_UiScaleMode: 0
+  m_ReferencePixelsPerUnit: 132.41
+  m_ScaleFactor: 1
+  m_ReferenceResolution: {x: 800, y: 600}
+  m_ScreenMatchMode: 0
+  m_MatchWidthOrHeight: 0
+  m_PhysicalUnit: 3
+  m_FallbackScreenDPI: 96
+  m_DefaultSpriteDPI: 96
+  m_DynamicPixelsPerUnit: 38.8
+--- !u!114 &114229454864219152
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1028148672601040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e372b680d0de4dc4cad53ad8afd5c969, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Head: {fileID: 1862519496204752}
+  LeftHand: {fileID: 1937062358050256}
+  LeftHandLastPos: {x: 0, y: 0, z: 0}
+  LeftHandLastAngularPos: {x: 0, y: 0, z: 0, w: 1}
+  RightHand: {fileID: 1187776249714314}
+  RightHandLastPos: {x: 0, y: 0, z: 0}
+  RightHandLastAngularPos: {x: 0, y: 0, z: 0, w: 1}
+  Name: 
+  ScoreBoardPosition: 0
+  namePlate: {fileID: 114481946806626696}
+  ID: 1
+  SosigHead: {fileID: 1512180776407704}
+  SosigTorso: {fileID: 1110243865625822}
+  LeftFakeHand: {fileID: 0}
+  RightFakeHand: {fileID: 0}
+--- !u!114 &114307051232898038
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1102693913768318}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
+  m_condition: 1
+--- !u!114 &114314685314872740
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -800,7 +861,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1937062358050256}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da16ccb3966ce64e8daae860574135a, type: 3}
+  m_Script: {fileID: 11500000, guid: ff3de77ce889494cbf18505707d6cb05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HandSource: 1
@@ -903,7 +964,7 @@ MonoBehaviour:
   MagPose_Index: {fileID: 0}
   MagPose_WMR: {fileID: 0}
   Input:
-    Hand: {fileID: 0}
+    Hand: {fileID: 114314685314872740}
     TriggerUp: 0
     TriggerDown: 0
     TriggerPressed: 0
@@ -1053,7 +1114,7 @@ MonoBehaviour:
   m_buzztime: 0
   m_canMadeGrabReleaseSoundThisFrame: 1
   IsGripToggle: 0
-  OtherHand: {fileID: 0}
+  OtherHand: {fileID: 114314685314872740}
   m_aud: {fileID: 0}
   m_rb: {fileID: 0}
   LM_RawGrab:
@@ -1111,67 +1172,6 @@ MonoBehaviour:
   Grabbity_GrabSphere: {fileID: 0}
   LastPos: {x: 0, y: 0, z: 0}
   LastRotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114187724230752236
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695913452460228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1980459831, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 132.41
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 38.8
---- !u!114 &114229454864219152
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1028148672601040}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e372b680d0de4dc4cad53ad8afd5c969, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Head: {fileID: 1862519496204752}
-  LeftHand: {fileID: 1937062358050256}
-  LeftHandLastPos: {x: 0, y: 0, z: 0}
-  LeftHandLastAngularPos: {x: 0, y: 0, z: 0, w: 1}
-  RightHand: {fileID: 1187776249714314}
-  RightHandLastPos: {x: 0, y: 0, z: 0}
-  RightHandLastAngularPos: {x: 0, y: 0, z: 0, w: 1}
-  Name: 
-  ScoreBoardPosition: 0
-  namePlate: {fileID: 114481946806626696}
-  ID: 1
-  SosigHead: {fileID: 1512180776407704}
-  SosigTorso: {fileID: 1110243865625822}
-  LeftFakeHand: {fileID: 114175553625484476}
-  RightFakeHand: {fileID: 114475323166343806}
---- !u!114 &114307051232898038
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1102693913768318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Def: {fileID: 0}
-  MatDef: {fileID: 0}
-  m_condition: 1
 --- !u!114 &114395230225477364
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1186,7 +1186,70 @@ MonoBehaviour:
   Def: {fileID: 0}
   MatDef: {fileID: 0}
   m_condition: 1
---- !u!114 &114475323166343806
+--- !u!114 &114481946806626696
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1278395348881074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 1, b: 0.2965517, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 14
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 1
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: New Text
+--- !u!114 &114552514165829104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480301166918936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Def: {fileID: 0}
+  MatDef: {fileID: 0}
+  m_condition: 1
+--- !u!114 &114587136095472154
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1695913452460228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+--- !u!114 &114849966721187570
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1194,7 +1257,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1187776249714314}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4da16ccb3966ce64e8daae860574135a, type: 3}
+  m_Script: {fileID: 11500000, guid: ff3de77ce889494cbf18505707d6cb05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   HandSource: 2
@@ -1297,7 +1360,7 @@ MonoBehaviour:
   MagPose_Index: {fileID: 0}
   MagPose_WMR: {fileID: 0}
   Input:
-    Hand: {fileID: 0}
+    Hand: {fileID: 114849966721187570}
     TriggerUp: 0
     TriggerDown: 0
     TriggerPressed: 0
@@ -1447,7 +1510,7 @@ MonoBehaviour:
   m_buzztime: 0
   m_canMadeGrabReleaseSoundThisFrame: 1
   IsGripToggle: 0
-  OtherHand: {fileID: 0}
+  OtherHand: {fileID: 114314685314872740}
   m_aud: {fileID: 0}
   m_rb: {fileID: 0}
   LM_RawGrab:
@@ -1461,7 +1524,7 @@ MonoBehaviour:
   m_currentHoveredQuickbeltSlotDirty: {fileID: 0}
   DeviceName: 
   m_hasInit: 0
-  IsThisTheRightHand: 0
+  IsThisTheRightHand: 1
   forcetubevr: {fileID: 0}
   frequency: 1
   oldFrequency: 0
@@ -1505,69 +1568,6 @@ MonoBehaviour:
   Grabbity_GrabSphere: {fileID: 0}
   LastPos: {x: 0, y: 0, z: 0}
   LastRotation: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114481946806626696
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1278395348881074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.2965517, a: 1}
-  m_RaycastTarget: 0
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 14
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 10
-    m_MaxSize: 40
-    m_Alignment: 1
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: New Text
---- !u!114 &114552514165829104
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1480301166918936}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -870000170, guid: 61df6207064b6df9f1154d3f48a90696, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Def: {fileID: 0}
-  MatDef: {fileID: 0}
-  m_condition: 1
---- !u!114 &114587136095472154
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1695913452460228}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1301386320, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &114989732547280530
 MonoBehaviour:
   m_ObjectHideFlags: 1

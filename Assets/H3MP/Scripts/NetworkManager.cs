@@ -7,6 +7,7 @@ using H3MP.Core;
 using System.Linq;
 using FistVR;
 using H3MP.Scripts;
+using HarmonyLib;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class NetworkManager : MonoBehaviour
     public List<string> PlayerList;
     public static NetworkManager instance;
 
+    private FVRViveHand _playerLeftHand, _playerRightHand;
+    
     private Plugin _networking
     {
         get
@@ -42,14 +45,20 @@ public class NetworkManager : MonoBehaviour
         _tmpIDMap = new Dictionary<int, NetworkedBehaviour>();
 
         _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Networking.PLAYER_LIST] = HandlePlayerListMessages;
-        _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Player.UPDATE_TRANSFORM] =
-            HandlePlayerMovementMessage;
-        _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Player.ENTER] =
-            HandleConnectionInformationPacketMessage;
+        _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Player.UPDATE_TRANSFORM] = HandlePlayerMovementMessage;
+        _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Player.ENTER] = HandlePlayerEnterMessage;
 
         _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Object.BIRTH] = OnObjectBirth;
         _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Object.ID_SET] = TempIDToRealID;
         _networking.ClientMessageHandlers[(ushort) MessageIdentifier.Object.DEATH] = OnDeathProclamation;
+
+        _networking.ClientMessageHandlers[(ushort)MessageIdentifier.Player.UPDATE_INPUT] = HandleInput;
+
+        _playerLeftHand = GM.CurrentPlayerBody.LeftHand.GetComponent<FVRViveHand>();
+        _playerRightHand = GM.CurrentPlayerBody.RightHand.GetComponent<FVRViveHand>();
+
+        var harmony = new Harmony("com.wfiost.patches.h3mp");
+        harmony.PatchAll(typeof(FVRViveHand_Hooks));
     }
 
 
@@ -79,15 +88,15 @@ public class NetworkManager : MonoBehaviour
 
 #region Players
 
-    public virtual void AddPlayer(ushort id, string username)
+    public virtual void AddPlayer(ushort id, Player player)
     {
         GameObject Jeff = Instantiate(PlayerPrefab);
         ScenePlayer JeffSP = Jeff.GetComponent<ScenePlayer>();
         scenePlayers.Add(JeffSP);
         JeffSP.ScoreBoardPosition = scenePlayers.IndexOf(JeffSP);
         JeffSP.ID = id;
-        JeffSP.Name = username;
-        JeffSP.namePlate.text = username;
+        JeffSP.Name = player.Username;
+        JeffSP.namePlate.text = player.Username;
 
         if (PlayerConnectedEvent != null)
             PlayerConnectedEvent.Invoke();
@@ -98,30 +107,28 @@ public class NetworkManager : MonoBehaviour
         Player[] Players = message.GetSerializables<Player>();
         foreach (Player player in Players)
         {
-            AddPlayer(player.ID, player.Username);
+            AddPlayer(player.ID, player);
         }
     }
 
     //Handles Handles the message at connection where the server sends the client a list of currently connected players
-    public void HandleConnectionInformationPacketMessage(Message message)
+    public void HandlePlayerEnterMessage(Message message)
     {
-        AddPlayer(message.GetUShort(), message.GetString());       
+        var id = message.GetUShort();
+        var player = message.GetSerializable<Player>();
+        AddPlayer(id, player);       
     }
 
     //Handles incoming player mocement packets
     public void HandlePlayerMovementMessage(Message message)
     {
-
-        Player NewMovePacket = new Player();
-
-        NewMovePacket.Deserialize(message);
-        // Debug.Log("Move Packet ID " + NewMovePacket.ID.ToString());
-        for (int i = 0; i <= scenePlayers.Count - 1; i++)
+        var id = message.GetUShort();
+        var player = message.GetSerializable<Player>();
+        
+        foreach (var instance in scenePlayers)
         {
-            if (scenePlayers[i].ID == NewMovePacket.ID)
-            {
-                scenePlayers[i].UpdatePlayer(NewMovePacket);
-            }
+            if (instance.ID == id)
+                instance.UpdatePlayer(player);
         }
     }
 
@@ -132,8 +139,130 @@ public class NetworkManager : MonoBehaviour
         msg.Add(playerUpdateStruct);
         _networking.Client.Send(msg);
 
+        _networking.Client.Send(CreateInputMessage(_playerLeftHand));
+        _networking.Client.Send(CreateInputMessage(_playerRightHand));
     }
 
+    private Message CreateInputMessage(FVRViveHand hand)
+    {
+        var input = new SerialisableInput
+        {
+            Trigger = new SerialisableInput.LeverInput
+            {
+                Button = new SerialisableInput.ButtonInput
+                {
+                    Pressed = hand.Input.TriggerPressed,
+                    Touched = hand.Input.TriggerTouched
+                },
+                Value = hand.Input.TriggerFloat
+            },
+            Touchpad = new SerialisableInput.TouchpadInput
+            {
+                Axes = hand.Input.TouchpadAxes,
+                Button = new SerialisableInput.ButtonInput
+                {
+                    Pressed = hand.Input.TouchpadPressed,
+                    Touched = hand.Input.TouchpadTouched
+                }
+            },
+            Secondary2Axis = new SerialisableInput.TouchpadInput
+            {
+                Axes = hand.Input.Secondary2AxisInputAxes,
+                Button = new SerialisableInput.ButtonInput
+                {
+                    Pressed = hand.Input.Secondary2AxisInputPressed,
+                    Touched = hand.Input.Secondary2AxisInputTouched
+                }
+            },
+            
+            TouchpadNorth = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.TouchpadNorthPressed,
+                Touched = hand.Input.TouchpadNorthDown
+            },
+            TouchpadSouth = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.TouchpadSouthPressed,
+                Touched = hand.Input.TouchpadSouthDown
+            },
+            TouchpadWest = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.TouchpadWestPressed,
+                Touched = hand.Input.TouchpadWestDown
+            },
+            TouchpadEast = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.TouchpadEastPressed,
+                Touched = hand.Input.TouchpadEastDown
+                
+            },
+            TouchpadCentre = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.TouchpadCenterPressed,
+                Touched = hand.Input.TouchpadCenterDown
+            },
+            
+            AX = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.AXButtonPressed,
+                Touched = hand.Input.AXButtonDown
+            },
+            BY = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.BYButtonPressed,
+                Touched = hand.Input.BYButtonDown
+            },
+            
+            Secondary2AxisNorth = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.Secondary2AxisNorthPressed,
+                Touched = hand.Input.Secondary2AxisNorthDown
+            },
+            Secondary2AxisSouth = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.Secondary2AxisSouthPressed,
+                Touched = hand.Input.Secondary2AxisSouthDown
+            },
+            Secondary2AxisEast = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.Secondary2AxisEastPressed,
+                Touched = hand.Input.Secondary2AxisEastDown
+            },
+            Secondary2AxisWest = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.Secondary2AxisWestPressed,
+                Touched = hand.Input.Secondary2AxisWestDown
+            },
+            Secondary2AxisCentre = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.Secondary2AxisCenterPressed,
+                Touched = hand.Input.Secondary2AxisCenterDown
+            },
+            
+            Grip = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.GripPressed,
+                Touched = hand.Input.GripTouched
+            },
+            Grabbing = new SerialisableInput.ButtonInput
+            {
+                Pressed = hand.Input.IsGrabbing,
+                Touched = hand.Input.IsGrabDown
+            },
+            
+            FromLeftHand = !hand.IsThisTheRightHand
+        };
+        
+        return Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(input);
+    }
+
+    private void HandleInput(Message msg)
+    {
+        var id = msg.GetUShort();
+        var input = msg.GetSerializable<SerialisableInput>();
+
+        scenePlayers.First(p => p.ID == id).InputUpdate(input);
+    }
 #endregion
 
 
@@ -181,5 +310,7 @@ public class NetworkManager : MonoBehaviour
     {
         
     }
+    
+    
 #endregion
 }

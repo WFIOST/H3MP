@@ -28,6 +28,7 @@ namespace H3MP.Scripts
 
             SetData();            
             NetworkManager.instance.RegisterObject(this);
+            
         }
 
         private void FixedUpdate()

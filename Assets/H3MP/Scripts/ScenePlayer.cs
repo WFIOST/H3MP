@@ -17,10 +17,10 @@ public class ScenePlayer : MonoBehaviour {
 	public int ScoreBoardPosition;
 	public Text namePlate;
 	public ushort ID;
-	public GameObject SosigHead;
-	public GameObject SosigTorso;
-	public FVRViveHand LeftFakeHand;
-	public FVRViveHand RightFakeHand;
+	public GameObject SosigHead, SosigTorso;
+	public PhantomHand LeftFakeHand, RightFakeHand;
+
+	
 	// Use this for initialization
 	void Start () {
 		
@@ -42,23 +42,11 @@ public class ScenePlayer : MonoBehaviour {
 		RightHand.transform.SetPositionAndRotation(PS.RightHand.Transform.position, PS.RightHand.Transform.rotation);
 		
 	}
-	public void ReceiveInputMessage(InputUpdate IU)
-    {		
-			var hand = IU.isLeftHand ? LeftFakeHand : RightFakeHand;
-			switch (IU.Input)
-            {
-				case InputUpdate.Inputs.GRIP_DOWN:
-					hand.Input.IsGrabDown = true;
-					hand.Input.IsGrabbing = true;
-					break;
-				case InputUpdate.Inputs.GRIP_UP:
-					hand.Input.IsGrabbing = false;
-					hand.Input.IsGrabUp = true;
-					break;
-            }
-        
-		
-			
-		
-    }
+
+
+	public void InputUpdate(SerialisableInput input)
+	{
+		if (input.FromLeftHand) LeftFakeHand.InputUpdate(input);
+		else RightFakeHand.InputUpdate(input);
+	}
 }
