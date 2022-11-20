@@ -46,7 +46,7 @@ public class ScenePlayer : MonoBehaviour {
 
 	public void InputUpdate(SerialisableInput input)
 	{
-		if (input.FromLeftHand) LeftFakeHand.InputUpdate(input);
-		else RightFakeHand.InputUpdate(input);
+		if (input.IsRightHand) RightFakeHand.InputUpdate(input);
+		else LeftFakeHand.InputUpdate(input);
 	}
 }
