@@ -926,7 +926,7 @@ MonoBehaviour:
   Mode: 0
   CMode: 0
   DMode: 0
-  IsInDemoMode: 0
+  IsInDemoMode: 1
   WholeRig: {fileID: 0}
   Head: {fileID: 0}
   MovementManager: {fileID: 0}
@@ -1088,6 +1088,7 @@ MonoBehaviour:
   WristMenuTarget: {fileID: 0}
   WristMenuTarget_Index: {fileID: 0}
   m_wristmenu: {fileID: 0}
+  m_wristmen2: {fileID: 0}
   m_isWristMenuActive: 0
   GrabLaser: {fileID: 0}
   BlueLaser: {fileID: 0}
@@ -1322,7 +1323,7 @@ MonoBehaviour:
   Mode: 0
   CMode: 0
   DMode: 0
-  IsInDemoMode: 0
+  IsInDemoMode: 1
   WholeRig: {fileID: 0}
   Head: {fileID: 0}
   MovementManager: {fileID: 0}
@@ -1484,6 +1485,7 @@ MonoBehaviour:
   WristMenuTarget: {fileID: 0}
   WristMenuTarget_Index: {fileID: 0}
   m_wristmenu: {fileID: 0}
+  m_wristmen2: {fileID: 0}
   m_isWristMenuActive: 0
   GrabLaser: {fileID: 0}
   BlueLaser: {fileID: 0}
