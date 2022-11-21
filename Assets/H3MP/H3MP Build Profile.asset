@@ -21,7 +21,8 @@ MonoBehaviour:
   AdditionalDependencies:
   - nrgill28-Sodalite-1.4.0
   StripNamespaces: 1
-  AdditionalNamespaces: []
+  AdditionalNamespaces:
+  - H3MP
   ApplyHarmonyPatches: 1
   BuildItems:
   - {fileID: 11400000, guid: 763b7218d0e45344cb4ba0f2ee37837b, type: 2}

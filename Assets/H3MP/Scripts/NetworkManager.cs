@@ -152,7 +152,6 @@ public class NetworkManager : MonoBehaviour
     }
 #endregion
 
-
 #region Objects
 
     private int _tempIDReference;
