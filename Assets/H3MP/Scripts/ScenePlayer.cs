@@ -7,10 +7,9 @@ using FistVR;
 public class ScenePlayer : MonoBehaviour {
 
 	public GameObject Head;
-	public GameObject LeftHand;
+	public GameObject LeftHand, RightHand;
 	public Vector3 LeftHandLastPos = Vector3.zero;
 	public Quaternion LeftHandLastAngularPos =  Quaternion.identity;
-	public GameObject RightHand;
 	public Vector3 RightHandLastPos = Vector3.zero;
 	public Quaternion RightHandLastAngularPos = Quaternion.identity;
 	public string Name;
@@ -18,16 +17,21 @@ public class ScenePlayer : MonoBehaviour {
 	public Text namePlate;
 	public ushort ID;
 	public GameObject SosigHead, SosigTorso;
-	public PhantomHand LeftFakeHand, RightFakeHand;
 
-	
-	// Use this for initialization
-	void Start () {
-		
+	[SerializeField]
+	private FVRViveHand _leftFakeHand, _rightFakeHand;
+
+	void Start ()
+	{
+		_leftFakeHand = Instantiate(GM.CurrentPlayerBody.LeftHand.GetComponent<FVRViveHand>(), LeftHand.transform);
+		_rightFakeHand = Instantiate(GM.CurrentPlayerBody.RightHand.GetComponent<FVRViveHand>(), RightHand.transform);
+
+		_leftFakeHand.IsInDemoMode = true;
+		_rightFakeHand.IsInDemoMode = true;
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 		SosigHead.transform.SetPositionAndRotation(SosigHead.transform.position, Head.transform.rotation);
 		SosigTorso.transform.position.Set(Head.transform.position.x, Head.transform.position.y - 1, Head.transform.position.z);
 	}
@@ -46,7 +50,7 @@ public class ScenePlayer : MonoBehaviour {
 
 	public void InputUpdate(SerialisableInput input)
 	{
-		if (input.IsRightHand) RightFakeHand.InputUpdate(input);
-		else LeftFakeHand.InputUpdate(input);
+		if (input.IsRightHand) _rightFakeHand.Input = input.Input;
+		else _leftFakeHand.Input = input.Input;
 	}
 }
