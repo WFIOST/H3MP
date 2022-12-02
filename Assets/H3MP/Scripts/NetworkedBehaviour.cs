@@ -38,8 +38,8 @@ namespace H3MP.Scripts
 
         private void SetData()
         {
-            Data.Transform.position = transform.position;
-            Data.Transform.rotation = transform.rotation;
+            Data.Transform.Position = transform.position;
+            Data.Transform.Rotation = transform.rotation;
             Data.Velocity = _rigidbody.velocity;
             
         }

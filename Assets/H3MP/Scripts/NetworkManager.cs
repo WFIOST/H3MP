@@ -29,7 +29,7 @@ public class NetworkManager : MonoBehaviour
         }
     }
 
-    private Player playerUpdateStruct;
+    public Player playerUpdateStruct;
     
     private bool hasUpdatedID;
 
@@ -40,6 +40,8 @@ public class NetworkManager : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
         playerUpdateStruct = new Player();
+        playerUpdateStruct.LeftHand = new Hand(GM.CurrentMovementManager.Hands[0]);
+        playerUpdateStruct.RightHand = new Hand(GM.CurrentMovementManager.Hands[1]);
         instance = this;
         _objects = new Dictionary<int, NetworkedBehaviour>();
         _tmpIDMap = new Dictionary<int, NetworkedBehaviour>();
@@ -64,12 +66,22 @@ public class NetworkManager : MonoBehaviour
 
     void Update()
     {
-        instance.playerUpdateStruct.Head.position = GM.CurrentPlayerBody.Head.position;
-        instance.playerUpdateStruct.Head.rotation = GM.CurrentPlayerBody.Head.rotation;
-        instance.playerUpdateStruct.LeftHand.Transform.position = GM.CurrentMovementManager.Hands[0].transform.position;
-        instance.playerUpdateStruct.LeftHand.Transform.rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
-        instance.playerUpdateStruct.RightHand.Transform.position = GM.CurrentMovementManager.Hands[1].transform.position;
-        instance.playerUpdateStruct.RightHand.Transform.rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+        playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
+        //Debug.Log("1");
+        playerUpdateStruct.Head.Rotation = GM.CurrentPlayerBody.Head.rotation;
+       // Debug.Log("2");
+        playerUpdateStruct.LeftHand.Transform.Position = GM.CurrentMovementManager.Hands[0].transform.position;
+       // Debug.Log("3");
+        playerUpdateStruct.LeftHand.Transform.Rotation = GM.CurrentMovementManager.Hands[0].transform.rotation;
+       // Debug.Log("4");
+        playerUpdateStruct.RightHand.Transform.Position = GM.CurrentMovementManager.Hands[1].transform.position;
+      //  Debug.Log("5");
+        playerUpdateStruct.RightHand.Transform.Rotation = GM.CurrentMovementManager.Hands[1].transform.rotation;
+       // Debug.Log("6");
+        playerUpdateStruct.LeftHand.Input.Input = _playerLeftHand.Input;
+       // Debug.Log("7");
+        playerUpdateStruct.RightHand.Input.Input = GM.CurrentMovementManager.Hands[1].Input;
+       // Debug.Log("8");
         if (!hasUpdatedID && _networking.Client.IsConnected)
         {
             playerUpdateStruct.ID = _networking.Client.Id;
@@ -101,7 +113,11 @@ public class NetworkManager : MonoBehaviour
         if (PlayerConnectedEvent != null)
             PlayerConnectedEvent.Invoke();
     }
-
+   /* public void sendInput()
+    {
+        playerUpdateStruct.LeftHand.Input.Input = GM.CurrentMovementManager.Hands[0].Input;
+        playerUpdateStruct.LeftHand.Input.Input = GM.CurrentMovementManager.Hands[1].Input;
+    }*/
     public void HandlePlayerListMessages(Message message)
     {
         Player[] Players = message.GetSerializables<Player>();
@@ -139,8 +155,8 @@ public class NetworkManager : MonoBehaviour
         msg.Add(playerUpdateStruct);
         _networking.Client.Send(msg);
 
-        _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerLeftHand)));
-        _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerRightHand)));
+       // _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerLeftHand)));
+       // _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerRightHand)));
     }
     
     private void HandleInput(Message msg)

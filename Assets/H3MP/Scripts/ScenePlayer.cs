@@ -41,9 +41,9 @@ public class ScenePlayer : MonoBehaviour {
 		LeftHandLastAngularPos = LeftHand.transform.rotation;
 		RightHandLastPos = RightHand.transform.position;
 		RightHandLastAngularPos = RightHand.transform.rotation;
-	    Head.transform.SetPositionAndRotation(PS.Head.position, PS.Head.rotation);
-		LeftHand.transform.SetPositionAndRotation(PS.LeftHand.Transform.position, PS.LeftHand.Transform.rotation);
-		RightHand.transform.SetPositionAndRotation(PS.RightHand.Transform.position, PS.RightHand.Transform.rotation);
+	    Head.transform.SetPositionAndRotation(PS.Head.Position, PS.Head.Rotation);
+		LeftHand.transform.SetPositionAndRotation(PS.LeftHand.Transform.Position, PS.LeftHand.Transform.Rotation);
+		RightHand.transform.SetPositionAndRotation(PS.RightHand.Transform.Position, PS.RightHand.Transform.Rotation);
 		
 	}
 
