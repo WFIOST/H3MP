@@ -8,7 +8,6 @@ using System.Linq;
 using FistVR;
 using H3MP.Scripts;
 using HarmonyLib;
-
 public class NetworkManager : MonoBehaviour
 {
     public static Action PlayerConnectedEvent;
@@ -150,7 +149,7 @@ public class NetworkManager : MonoBehaviour
 
     private void PlayerMoveMessageSender()
     {
-        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort) MessageIdentifier.Player.UPDATE_TRANSFORM);
+        Message msg = Message.Create(MessageSendMode.Unreliable, (ushort)MessageIdentifier.Player.UPDATE_TRANSFORM);
 
         msg.Add(playerUpdateStruct);
         _networking.Client.Send(msg);
@@ -161,14 +160,86 @@ public class NetworkManager : MonoBehaviour
     
     private void HandleInput(Message msg)
     {
-        var id = msg.GetUShort();
-        var input = msg.GetSerializable<SerialisableInput>();
+        //var id = msg.GetUShort();
+        //var input = msg.GetSerializable<SerialisableInput>();
 
-        scenePlayers.First(p => p.ID == id).InputUpdate(input);
+        //scenePlayers.First(p => p.ID == id).InputUpdate(input);
     }
-#endregion
 
-#region Objects
+    // Previous hand inputs.
+    private HandInput _LPrev = new HandInput();
+    private HandInput _RPrev = new HandInput();
+
+    private bool _firstRun = true;
+    
+    private void CheckInputStatus()
+    {
+        if (_firstRun)
+        {
+            _LPrev = _playerLeftHand.Input;
+            _RPrev = _playerRightHand.Input;
+            _firstRun = false;
+        }
+        var _LCurrent = GM.CurrentPlayerBody.LeftHand.GetComponent<FVRViveHand>().Input;
+        var _RCurrent = GM.CurrentPlayerBody.RightHand.GetComponent<FVRViveHand>().Input;
+        // Check what properties have changed.
+        var a = GetChangedProperties(_LPrev, _LCurrent);
+        var b = GetChangedProperties(_RPrev, _RCurrent);
+
+        // Update previous values.
+        _LPrev = _LCurrent;
+        _RPrev = _RCurrent;
+
+        // Hate this ngl
+        foreach (string propertyValue in a)
+        {
+            Enum.Parse(typeof(InputIdentifier), propertyValue);
+            Debug.Log(propertyValue);
+        }
+    }
+
+    public static List<string> GetChangedProperties(object obj1, object obj2)
+    {
+        var changedProperties = new List<string>();
+
+        if (obj1 == null || obj2 == null)
+        {
+            return changedProperties.ToList();
+        }
+
+        if (obj1.GetType() != obj2.GetType())
+        {
+            return changedProperties.ToList();
+        }
+
+        var properties1 = obj1.GetType().GetProperties();
+
+        foreach (var property in properties1)
+        {
+            var value1 = property.GetValue(obj1, null);
+            var value2 = property.GetValue(obj2, null);
+
+            if (value1 == null || value2 == null)
+            {
+                if (value1 != value2)
+                {
+                    changedProperties.Add(property.Name);
+                }
+            }
+            else if (!value1.Equals(value2))
+            {
+                changedProperties.Add(property.Name);
+            }
+        }
+
+
+
+        return changedProperties.ToList();
+    }
+
+    #endregion
+
+    #region Objects
 
     private int _tempIDReference;
     private Dictionary<int, NetworkedBehaviour> _tmpIDMap;
