@@ -158,13 +158,6 @@ public class NetworkManager : MonoBehaviour
        // _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerRightHand)));
     }
     
-    private void HandleInput(Message msg)
-    {
-        //var id = msg.GetUShort();
-        //var input = msg.GetSerializable<SerialisableInput>();
-
-        //scenePlayers.First(p => p.ID == id).InputUpdate(input);
-    }
 
     // Previous hand inputs.
     private HandInput _LPrev = new HandInput();
@@ -237,6 +230,19 @@ public class NetworkManager : MonoBehaviour
         return changedProperties.ToList();
     }
 
+    private void HandleInput(Message msg)
+    {
+        var plrid = msg.GetUShort();
+        byte rawid = msg.GetByte();
+        bool isRightHand = (rawid & 0b10000000) == 0;
+        //var inputID = (InputIdentifier)(isRightHand ? (rawid ^ 0b10000000) : rawid);
+
+        SerialisableInput input = msg.GetSerializable<SerialisableInput>();
+        input.UpdateInput(msg);
+        input.IsRightHand = isRightHand;
+
+        scenePlayers.Find(x => x.ID == plrid).InputUpdate(input);
+    }
     #endregion
 
     #region Objects
