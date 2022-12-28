@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using H3MP.Core;
+using Riptide;
 using FistVR;
+
 public class ScenePlayer : MonoBehaviour {
 
 	public GameObject Head;
@@ -48,9 +50,8 @@ public class ScenePlayer : MonoBehaviour {
 	}
 
 
-	public void InputUpdate(SerialisableInput input)
+	public void InputUpdate(bool rightHand, InputIdentifier id, Message pkt)
 	{
-		if (input.IsRightHand) _rightFakeHand.Input = input.Input;
-		else _leftFakeHand.Input = input.Input;
+		
 	}
 }

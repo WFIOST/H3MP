@@ -8,6 +8,9 @@ using System.Linq;
 using FistVR;
 using H3MP.Scripts;
 using HarmonyLib;
+using OneOf;
+using Steamworks;
+
 public class NetworkManager : MonoBehaviour
 {
     public static Action PlayerConnectedEvent;
@@ -18,7 +21,8 @@ public class NetworkManager : MonoBehaviour
     public static NetworkManager instance;
 
     private FVRViveHand _playerLeftHand, _playerRightHand;
-    
+    private readonly string[] _syncedFields = Enum.GetNames(typeof(InputIdentifier));
+
     private Plugin _networking
     {
         get
@@ -62,7 +66,7 @@ public class NetworkManager : MonoBehaviour
         harmony.PatchAll(typeof(FVRViveHand_Hooks));
     }
 
-
+ 
     void Update()
     {
         playerUpdateStruct.Head.Position = GM.CurrentPlayerBody.Head.position;
@@ -153,6 +157,8 @@ public class NetworkManager : MonoBehaviour
 
         msg.Add(playerUpdateStruct);
         _networking.Client.Send(msg);
+        
+        // CheckInputStatus();
 
        // _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerLeftHand)));
        // _networking.Client.Send(Message.Create(MessageSendMode.Unreliable, MessageIdentifier.Player.UPDATE_INPUT).Add(new SerialisableInput(_playerRightHand)));
@@ -160,88 +166,28 @@ public class NetworkManager : MonoBehaviour
     
 
     // Previous hand inputs.
-    private HandInput _LPrev = new HandInput();
-    private HandInput _RPrev = new HandInput();
+    private HandInput _LPrev;
+    private HandInput _RPrev;
 
     private bool _firstRun = true;
-    
-    private void CheckInputStatus()
+
+    public IEnumerable<KeyValuePair<InputIdentifier, OneOf<bool, float, Vector2, Vector3, Quaternion>>> GetChangedInputs(HandInput prev, HandInput curr)
     {
-        if (_firstRun)
+        foreach (string ident in Enum.GetNames(typeof(InputIdentifier)))
         {
-            _LPrev = _playerLeftHand.Input;
-            _RPrev = _playerRightHand.Input;
-            _firstRun = false;
+            
         }
-        var _LCurrent = GM.CurrentPlayerBody.LeftHand.GetComponent<FVRViveHand>().Input;
-        var _RCurrent = GM.CurrentPlayerBody.RightHand.GetComponent<FVRViveHand>().Input;
-        // Check what properties have changed.
-        var a = GetChangedProperties(_LPrev, _LCurrent);
-        var b = GetChangedProperties(_RPrev, _RCurrent);
-
-        // Update previous values.
-        _LPrev = _LCurrent;
-        _RPrev = _RCurrent;
-
-        // Hate this ngl
-        foreach (string propertyValue in a)
-        {
-            Enum.Parse(typeof(InputIdentifier), propertyValue);
-            Debug.Log(propertyValue);
-        }
-    }
-
-    public static List<string> GetChangedProperties(object obj1, object obj2)
-    {
-        var changedProperties = new List<string>();
-
-        if (obj1 == null || obj2 == null)
-        {
-            return changedProperties.ToList();
-        }
-
-        if (obj1.GetType() != obj2.GetType())
-        {
-            return changedProperties.ToList();
-        }
-
-        var properties1 = obj1.GetType().GetProperties();
-
-        foreach (var property in properties1)
-        {
-            var value1 = property.GetValue(obj1, null);
-            var value2 = property.GetValue(obj2, null);
-
-            if (value1 == null || value2 == null)
-            {
-                if (value1 != value2)
-                {
-                    changedProperties.Add(property.Name);
-                }
-            }
-            else if (!value1.Equals(value2))
-            {
-                changedProperties.Add(property.Name);
-            }
-        }
-
-
-
-        return changedProperties.ToList();
     }
 
     private void HandleInput(Message msg)
     {
-        var plrid = msg.GetUShort();
+        
+        ushort plrid = msg.GetUShort();
         byte rawid = msg.GetByte();
-        bool isRightHand = (rawid & 0b10000000) == 0;
-        //var inputID = (InputIdentifier)(isRightHand ? (rawid ^ 0b10000000) : rawid);
+        bool isRightHand = (rawid & 0x80) == 0;
+        var inputID = (InputIdentifier)(isRightHand ? rawid ^ 0x80 : rawid);
 
-        SerialisableInput input = msg.GetSerializable<SerialisableInput>();
-        input.UpdateInput(msg);
-        input.IsRightHand = isRightHand;
-
-        scenePlayers.Find(x => x.ID == plrid).InputUpdate(input);
+        Serialization.UpdateInput(input: ref scenePlayers.Find(x => x.ID == plrid).LeftHand.GetComponent<FVRViveHand>().Input, id: inputID, msg: msg);
     }
     #endregion
 
