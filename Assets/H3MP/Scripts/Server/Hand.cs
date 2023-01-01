@@ -3,35 +3,42 @@ using FistVR;
 using Riptide;
 using UnityEngine;
 
-namespace H3MP.Server;
-
-[Serializable]
-public struct Hand : IMessageSerializable
+namespace H3MP.Server
 {
-    public SerialisableTransform    Transform;
-    public NetworkedObject?         Holding;
-    public SerialisableInput        Input;
-
-    public Hand(FVRViveHand reference)
+    [Serializable]
+    public struct Hand : IMessageSerializable
     {
-        Transform = new SerialisableTransform(reference.transform);
-        Input = new SerialisableInput(reference);
-        Holding = null;
-    }
-    
-    public void Serialize(Message message)
-    {
-        message.Add(Transform).Add(Input);
+        public SerialisableTransform Transform;
+        public NetworkedObject Holding;
+        public SerialisableInput Input;
 
-        if (Holding is not null) message.Add(Holding);
-    }
+        public Hand(FVRViveHand reference)
+        {
+            Transform = new SerialisableTransform(reference.transform);
+            Input = new SerialisableInput(reference);
+            Holding = null;
+        }
 
-    public void Deserialize(Message message)
-    {
-        Transform = message.GetSerializable<SerialisableTransform>();
-        Input = message.GetSerializable<SerialisableInput>();
+        public void Serialize(Message message)
+        {
+            message.Add(Transform).Add(Input);
 
-        try { Holding = message.GetSerializable<NetworkedObject>(); }
-        catch { Holding = null; }
+            if (Holding != null) message.Add(Holding);
+        }
+
+        public void Deserialize(Message message)
+        {
+            Transform = message.GetSerializable<SerialisableTransform>();
+            Input = message.GetSerializable<SerialisableInput>();
+
+            try
+            {
+                Holding = message.GetSerializable<NetworkedObject>();
+            }
+            catch
+            {
+                Holding = null;
+            }
+        }
     }
 }

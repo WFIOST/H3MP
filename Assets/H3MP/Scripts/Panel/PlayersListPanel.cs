@@ -65,32 +65,32 @@ namespace H3MP
 
 		public void StopServerOrDisconnect()
 		{
-			if (Plugin.Instance.IsServer)
-			{
-				if (_stopServerConfirm)
-				{
-					//TODO Stop server
-					ResetConfirms();
-				}
-				else
-				{
-					_stopServerConfirm = true;
-					StopServerText.text = "Confirm";
-				}
-			}
-			else
-			{
-				if (_stopServerConfirm)
-				{
-					//TODO Disconnect the player
-					ResetConfirms();
-				}
-				else
-				{
-					_stopServerConfirm = true;
-					StopServerText.text = "Confirm";
-				}
-			}
+			// if (Plugin.Instance.IsServer)
+			// {
+			// 	if (_stopServerConfirm)
+			// 	{
+			// 		//TODO Stop server
+			// 		ResetConfirms();
+			// 	}
+			// 	else
+			// 	{
+			// 		_stopServerConfirm = true;
+			// 		StopServerText.text = "Confirm";
+			// 	}
+			// }
+			// else
+			// {
+			// 	if (_stopServerConfirm)
+			// 	{
+			// 		//TODO Disconnect the player
+			// 		ResetConfirms();
+			// 	}
+			// 	else
+			// 	{
+			// 		_stopServerConfirm = true;
+			// 		StopServerText.text = "Confirm";
+			// 	}
+			// }
 		}
 
 		public void ResetConfirms()
@@ -100,10 +100,10 @@ namespace H3MP
 				tab.ResetConfirm();
 			}
 
-			if (Plugin.Instance.IsServer)
-				StopServerText.text = "Stop Server";
-			else
-				StopServerText.text = "Disconnect";
+			// if (Plugin.Instance.IsServer)
+			// 	StopServerText.text = "Stop Server";
+			// else
+			// 	StopServerText.text = "Disconnect";
 		}
 
 		private void UpdateLobbyCount()

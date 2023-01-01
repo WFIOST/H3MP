@@ -20,10 +20,10 @@ namespace H3MP
 
 		private void OnEnable()
 		{
-			if (Plugin.Instance.Server.IsRunning)
-				ShowPlayersList();
-			else
-				ShowConnectToServer();
+			// if (Plugin.Instance.Server.IsRunning)
+			// 	ShowPlayersList();
+			// else
+			// 	ShowConnectToServer();
 		}
 
 		public void ShowPlayersList()

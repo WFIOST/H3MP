@@ -10,17 +10,25 @@ using System.Reflection;
 using FistVR;
 using H3MP.Server;
 using BepInEx;
+using BepInEx.Configuration;
+using Riptide.Utils;
+using UnityEditor.VersionControl;
 
 
 namespace H3MP
 {
-	[BepInPlugin("org.wfiost.h3mp.client", "H3MP.Client", "1.0.0")]
+	[BepInPlugin("org.wfiost.h3mp", "H3MP", "1.0.0")]
 	public class NetworkingPanel : BaseUnityPlugin
 	{
 		public static Action ServerStarted;
 		public static Action ConnectedToServer;
 
 		public static NetworkingPanel NP;
+		
+		public ConfigEntry<ushort> PlayerCount { get; private set; }
+		public ConfigEntry<ushort> Port { get; private set; }
+		public ConfigEntry<ushort> TickRefreshRate { get; private set; }
+
 		public string IPaddress = "00000000";
 		private GameObject _modPanelPrefab;
 		private LockablePanel _modPanel = null;
@@ -29,6 +37,30 @@ namespace H3MP
 		public GameObject networkManager;
 		private static readonly string BasePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
+		public NetworkingPanel()
+		{
+			RiptideLogger.Initialize(debugMethod: Logger.LogDebug,
+									 infoMethod: Logger.LogInfo,
+									 warningMethod: Logger.LogWarning,
+									 errorMethod: Logger.LogError,
+									 includeTimestamps: true);
+			
+			Port = Config.Bind(section: "Server",
+				key: "Port",
+				defaultValue: (ushort)42069,
+				description: "Port to run the server on, must be port forwarded");
+
+			PlayerCount = Config.Bind(section: "Server",
+				key: "Max player count",
+				defaultValue: (ushort)0x10,
+				description: "Maximum amount of players allowed on the server");
+
+			TickRefreshRate = Config.Bind(section: "Server",
+				key: "Tick refresh rate",
+				defaultValue: (ushort)0xFF,
+				description: "How many ticks until the server syncs and refreshes");
+		}
+		
 		public void Awake()
 		{
 			var bundle = AssetBundle.LoadFromFile(Path.Combine(BasePath, "H3MP"));
@@ -97,7 +129,7 @@ namespace H3MP
 
 		public void CreateServer()
 		{
-			Plugin.Instance.StartServer();
+			// Plugin.Instance.StartServer();
 
 			if (ServerStarted != null)
 				ServerStarted.Invoke();
