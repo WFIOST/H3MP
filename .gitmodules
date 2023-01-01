@@ -1,0 +1,4 @@
+[submodule "Riptide"]
+	path = Riptide
+	url = https://github.com/WFIOST/Riptide
+	branch = main

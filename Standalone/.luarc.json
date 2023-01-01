@@ -1,0 +1,24 @@
+{
+    "runtime.path": [
+        "src/?.lua",
+        "src/?/init.lua",
+        "lua_modules/share/lua/5.1/?.lua",
+        "lua_modules/share/lua/5.1/?/init.lua"
+    ],
+    "runtime.version": "LuaJIT",
+    "workspace.useGitIgnore": false,
+    "diagnostics.groupSeverity": {
+        "ambiguity": "Error",
+        "await": "Error",
+        "codestyle": "Error",
+        "duplicate": "Error",
+        "global": "Error",
+        "luadoc": "Error",
+        "redefined": "Error",
+        "strict": "Error",
+        "strong": "Error",
+        "type-check": "Error",
+        "unbalanced": "Error",
+        "unused": "Hint"
+    }
+}
