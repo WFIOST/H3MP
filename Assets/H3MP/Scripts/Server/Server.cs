@@ -1,11 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BepInEx.Configuration;
 using Riptide;
 using Riptide.Utils;
-using BepInEx;
-using UnityEngine;
 using OneOf;
 using LogType = Riptide.Utils.LogType;
 
@@ -13,8 +10,6 @@ namespace H3MP.Server
 {
     public class Server
     {
-        public bool IsServer { get; private set; }
-
         public Riptide.Server Connection { get; private set; }
         public ulong ServerTick { get; private set; }
         public Dictionary<ushort, Player> Players { get; private set; }
@@ -42,8 +37,7 @@ namespace H3MP.Server
             ServerMessageHandlers[(ushort)MessageIdentifier.Player.UPDATE_INPUT] = OnPlayerInputUpdate;
             ServerMessageHandlers[(ushort)MessageIdentifier.Object.BIRTH] = OnObjectSpawn;
             ServerMessageHandlers[(ushort)MessageIdentifier.Object.DEATH] = OnObjectDespawn;
-
-            //
+            
             Connection.MessageReceived += (_, args) =>
             {
                 if (!ServerMessageHandlers.ContainsKey(args.MessageId))
@@ -57,22 +51,18 @@ namespace H3MP.Server
             };
         }
 
-        public void StartServer(ushort port, ushort maxClients)
+        public void Start(ushort port, ushort maxClients)
         {
             //Just in case!
             Stop();
 
-            //The host connects to the server as a client
-            IsServer = true;
-            
             Connection.Start(port: port, maxClientCount: maxClients);
 
             //Reset
             Players = new Dictionary<ushort, Player>();
             Objects = new Dictionary<int, NetworkedObject>();
         }
-
-
+        
         public void Update()
         {
             Connection.Update();
@@ -92,34 +82,36 @@ namespace H3MP.Server
 
         public void OnClientConnection(ushort id, Message pkt)
         {
-            var newPlayer = new Player() {
+            var newPlayer = new Player()
+            {
                 ID = id,
                 Username = pkt.GetString()
             };
 
             Connection.SendToAll(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Player.ENTER)
-                    .Add(id)
-                    .Add(newPlayer),
-                exceptToClientId: id);
+                                                 .Add(id)
+                                                 .Add(newPlayer), 
+                                 exceptToClientId: id);
 
             Connection.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Scene.LOAD)
-                    .Add(CurrentSceneID),
-                toClient: id);
+                                            .Add(CurrentSceneID),
+                            toClient: id);
 
             Connection.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Networking.OBJECT_LIST)
-                    .AddSerializables(Objects.ToSerialisable()),
-                toClient: id);
+                                            .AddSerializables(Objects.Values.ToArray()), 
+                            toClient: id);
 
             Connection.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Networking.PLAYER_LIST)
-                    .AddSerializables(Players.Values.ToArray()),
-                toClient: id);
+                                            .AddSerializables(Players.Values.ToArray()), 
+                            toClient: id);
+            
             Players[id] = newPlayer;
         }
 
         public void OnClientDisconnection(ushort id, Message pkt)
         {
             var reason = (DisconnectReason)pkt.GetByte();
-
+            
             RiptideLogger.Log(logType: LogType.Info, message: String.Format("Client {0} disconnected with reason {1}", id, reason.ToString()));
             Players.Remove(id);
 
@@ -152,16 +144,16 @@ namespace H3MP.Server
 
             var val = (isRightHand ? Players[id].RightHand : Players[id].LeftHand).Input.UpdateInput(id: inputID, msg: pkt);
             var msg = Message.Create(sendMode: MessageSendMode.Unreliable, id: MessageIdentifier.Player.UPDATE_INPUT)
-                .Add(id)
-                .Add((byte)inputID);
+                                     .Add(id)
+                                     .Add((byte)inputID);
 
-            val.Switch(
+            val.Switch (
                 b => msg.Add(b),
                 f => msg.Add(f),
                 v => msg.AddVector2(v),
                 v => msg.AddVector3(v),
                 q => msg.AddQuaternion(q)
-                );
+            );
 
             Connection.SendToAll(message: msg, exceptToClientId: id);
         }
@@ -178,12 +170,12 @@ namespace H3MP.Server
             Objects[obj.ID] = obj;
 
             Connection.SendToAll(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Object.BIRTH)
-                    .Add(obj),
-                exceptToClientId: id);
+                                                 .Add(obj), 
+                                 exceptToClientId: id);
             Connection.Send(message: Message.Create(sendMode: MessageSendMode.Reliable, id: MessageIdentifier.Object.ID_SET)
-                    .Add(tmpID)
-                    .Add(obj.ID),
-                toClient: id);
+                                            .Add(tmpID)
+                                            .Add(obj.ID), 
+                            toClient: id);
         }
 
         public void OnObjectDespawn(ushort id, Message msg)

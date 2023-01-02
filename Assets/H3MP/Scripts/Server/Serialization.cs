@@ -44,43 +44,7 @@ namespace H3MP.Server
         {
             return new Quaternion(x: msg.GetFloat(), y: msg.GetFloat(), z: msg.GetFloat(), w: msg.GetFloat());
         }
-
         
-        public struct ObjectKVP : IMessageSerializable
-        {
-            public int ID;
-            public NetworkedObject Object;
-            
-
-            public ObjectKVP(KeyValuePair<int, NetworkedObject> kvp)
-            {
-                ID = kvp.Key;
-                Object = kvp.Value;
-            }
-
-            public void Serialize(Message message)
-            {
-                message.Add(ID).Add(Object);
-            }
-
-            public void Deserialize(Message message)
-            {
-                ID = message.GetInt();
-                Object = message.GetSerializable<NetworkedObject>();
-            }
-        }
-
-        public static ObjectKVP[] ToSerialisable(this Dictionary<int, NetworkedObject> dict)
-        {
-            var objs = new ObjectKVP[dict.Count];
-
-            var i = 0;
-            foreach (KeyValuePair<int, NetworkedObject> kvp in dict)
-                objs[i++] = new ObjectKVP(kvp);
-
-            return objs;
-        }
-
         public static OneOf<bool, float, Vector2, Vector3, Quaternion> UpdateInput(ref HandInput input, InputIdentifier id, Message msg)
         {
             switch (id)
